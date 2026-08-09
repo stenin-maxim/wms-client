@@ -1,13 +1,41 @@
 import React, { useState } from 'react';
-import styles from './Login.module.scss'; // Импортируем SCSS Module
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAppDispatch } from '@/hooks/reduxHooks';
+import { useLoginMutation } from '@/features/auth/authApi';
+import { setCredentials } from '@/features/auth/authSlice';
+import styles from './login.module.scss';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [login, { isLoading, error }] = useLoginMutation();
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ email, password });
+        try {
+            const userData = await login({ email, password }).unwrap();
+            dispatch(setCredentials(userData));
+            
+            // Проверяем, откуда пришел пользователь, или отправляем по роли по умолчанию
+            const from = location.state?.from?.pathname;
+            if (from) {
+                navigate(from, { replace: true });
+            } else {
+                // Если ссылки не было, разделяем потоки по ролям
+                if (userData.user.role === 'worker') {
+                    navigate('/tsd/scan', { replace: true });
+                } else {
+                    navigate('/dashboard', { replace: true });
+                }
+            }
+        } catch (err) {
+            console.error('Ошибка авторизации:', err);
+        }
     };
 
     return (
@@ -20,11 +48,18 @@ export default function LoginPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.loginForm}>
+                    {error && (
+                        <div className={styles.errorMessage}>
+                            Неверный email или пароль
+                        </div>
+                    )}
+                    
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>Email компании</label>
                         <input
                             type="email"
                             required
+                            disabled={isLoading}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className={styles.formInput}
@@ -37,6 +72,7 @@ export default function LoginPage() {
                         <input
                             type="password"
                             required
+                            disabled={isLoading}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className={styles.formInput}
@@ -44,8 +80,8 @@ export default function LoginPage() {
                         />
                     </div>
 
-                    <button type="submit" className={styles.submitBtn}>
-                        Войти в личный кабинет
+                    <button type="submit" disabled={isLoading} className={styles.submitBtn}>
+                        {isLoading ? 'Проверка...' : 'Войти в личный кабинет'}
                     </button>
                 </form>
 

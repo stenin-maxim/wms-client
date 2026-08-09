@@ -1,4 +1,4 @@
-.loginPage {
+.registerPage {
     display: flex;
     min-height: 100vh;
     align-items: center;
@@ -7,9 +7,9 @@
     padding: 1.5rem;
     box-sizing: border-box;
 
-    .loginCard {
+    .registerCard {
         width: 100%;
-        max-width: 28rem; // Идеальная адаптивная ширина для карточки (448px)
+        max-width: 30rem;
         background-color: $bg-card;
         padding: 2.5rem;
         border-radius: 0.75rem;
@@ -18,7 +18,7 @@
         box-sizing: border-box;
     }
 
-    .loginHeader {
+    .registerHeader {
         text-align: center;
         margin-bottom: 2rem;
 
@@ -35,10 +35,10 @@
         }
     }
 
-    .loginForm {
+    .registerForm {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem; // Управляет отступами между полями ввода
+        gap: 1.25rem;
     }
 
     .formGroup {
@@ -82,13 +82,14 @@
         border: none;
         cursor: pointer;
         transition: background-color 0.2s;
+        margin-top: 0.5rem;
 
         &:hover {
             background-color: $primary-hover;
         }
     }
 
-    .loginFooter {
+    .registerFooter {
         margin-top: 1.5rem;
         text-align: center;
         font-size: 0.875rem;
