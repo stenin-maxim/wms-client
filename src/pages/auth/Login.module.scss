@@ -1,0 +1,107 @@
+.loginPage {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-dark;
+    padding: 1.5rem;
+    box-sizing: border-box;
+
+    .loginCard {
+        width: 100%;
+        max-width: 28rem; // Идеальная адаптивная ширина для карточки (448px)
+        background-color: $bg-card;
+        padding: 2.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba($border-color, 0.5);
+        box-sizing: border-box;
+    }
+
+    .loginHeader {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: $primary-amber;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 0.875rem;
+            color: $text-muted;
+        }
+    }
+
+    .loginForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem; // Управляет отступами между полями ввода
+    }
+
+    .formGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .formLabel {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #e2e8f0;
+    }
+
+    .formInput {
+        width: 100%;
+        border-radius: 0.375rem;
+        border: 1px solid $border-color;
+        background-color: $bg-input;
+        padding: 0.75rem;
+        color: $text-light;
+        font-size: 0.875rem;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus {
+            border-color: $primary-amber;
+            box-shadow: 0 0 0 2px rgba($primary-amber, 0.2);
+        }
+    }
+
+    .submitBtn {
+        width: 100%;
+        border-radius: 0.375rem;
+        background-color: $primary-amber;
+        padding: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #020617;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: $primary-hover;
+        }
+    }
+
+    .loginFooter {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.875rem;
+        color: $text-muted;
+
+        a {
+            font-weight: 600;
+            color: $primary-hover;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
