@@ -24,5 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Переменные окружения
 .env
 .env.local
+.env.production
+.env.development

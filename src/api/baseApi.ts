@@ -4,7 +4,7 @@ export const baseApi = createApi({
     reducerPath: 'api',
     // 1. Централизованная настройка базового URL и заголовков
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/v1/',
+        baseUrl: import.meta.env.VITE_API_URL,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem('wms_auth_token');
             if (token) {
