@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { baseApi } from '@/api/baseApi'; // Импортируем единый базовый API слоя
+import authReducer from '@/features/auth/authSlice'
 
 export const store = configureStore({
     reducer: {
+        auth: authReducer,
         // Подключаем единый автоматический редюсер для всех сетевых запросов приложения
         [baseApi.reducerPath]: baseApi.reducer,
     },
