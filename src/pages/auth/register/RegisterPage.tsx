@@ -1,22 +1,53 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRegisterMutation } from '@/features/auth/authApi';
+import { setCredentials } from '@/features/auth/authSlice';
 import styles from './register.module.scss'; // Импортируем локальный модуль стилей
 
 export default function RegisterPage() {
+    const dispatch = useDispatch();
     const [companyName, setCompanyName] = useState('');
-    const [email, setEmail] = useState('');
+    const [adminName, setAdminName] = useState('');
+    const [adminEmail, setAdminEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [registerCompany, { isLoading }] = useRegisterMutation();
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setErrorMessage('');
         
         if (password !== confirmPassword) {
             alert('Пароли не совпадают!');
             return;
         }
 
-        console.log({ companyName, email, password });
-        // Здесь в будущем будет вызов мутации регистрации из RTK Query
+        try {
+            const response = await registerCompany({
+                companyName,
+                adminName,
+                adminEmail,
+                password,
+            }).unwrap();
+
+            dispatch(setCredentials({
+                user: response.user,
+                token: response.token
+            }));
+
+            console.log('Компания успешно зарегистрирована:', response.user.companyName);
+
+            window.location.href = '/dashboard';
+        } catch (err: any) {
+            // Перехватываем структурированные ошибки от нашего GlobalExceptionHandler бэкенда
+            if (err?.data?.message) {
+                setErrorMessage(err.data.message);
+            } else {
+                setErrorMessage('Не удалось связаться с сервером склада. Попробуйте позже.');
+            }
+        }
     };
 
     return (
@@ -28,12 +59,19 @@ export default function RegisterPage() {
                     <p>Создайте учетную запись для вашей складской сети</p>
                 </div>
 
+                {errorMessage && (
+                    <div className={styles.errorAlert}>
+                        {errorMessage}
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit} className={styles.registerForm}>
                     <div className={styles.formGroup}>
                         <label className={styles.formLabel}>Название организации</label>
                         <input
                             type="text"
                             required
+                            disabled={isLoading}
                             value={companyName}
                             onChange={(e) => setCompanyName(e.target.value)}
                             className={styles.formInput}
@@ -42,12 +80,26 @@ export default function RegisterPage() {
                     </div>
 
                     <div className={styles.formGroup}>
+                        <label className={styles.formLabel}>ФИО Директора склада</label>
+                        <input
+                            type="text"
+                            required
+                            disabled={isLoading}
+                            value={adminName}
+                            onChange={(e) => setAdminName(e.target.value)}
+                            className={styles.formInput}
+                            placeholder="ФИО Директора"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
                         <label className={styles.formLabel}>Email администратора</label>
                         <input
                             type="email"
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            disabled={isLoading}
+                            value={adminEmail}
+                            onChange={(e) => setAdminEmail(e.target.value)}
                             className={styles.formInput}
                             placeholder="admin@company.ru"
                         />
@@ -58,6 +110,7 @@ export default function RegisterPage() {
                         <input
                             type="password"
                             required
+                            disabled={isLoading}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className={styles.formInput}
@@ -70,6 +123,7 @@ export default function RegisterPage() {
                         <input
                             type="password"
                             required
+                            disabled={isLoading}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className={styles.formInput}
@@ -77,8 +131,8 @@ export default function RegisterPage() {
                         />
                     </div>
 
-                    <button type="submit" className={styles.submitBtn}>
-                        Зарегистрировать склад
+                    <button type="submit" disabled={isLoading} className={styles.submitBtn}>
+                        {isLoading ? 'Создание склада...' : 'Зарегистрировать склад'}
                     </button>
                 </form>
 
