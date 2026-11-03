@@ -1,20 +1,17 @@
 import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import LoginPage from '@/pages/auth/LoginPage';
+import LandingPage from '@/pages/landing/LandingPage';
+import LoginPage from '@/pages/auth/login/LoginPage';
+import RegisterPage from '@/pages/auth/register/RegisterPage';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import DashboardLayout from '@/layouts/dashboard/DashboardLayout'; 
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
-const RegisterPage = () => <div style={{ padding: '2rem' }}>Страница регистрации компании</div>;
-const DashboardPage = () => <div style={{ padding: '2rem' }}>Главный дашборд (Статистика склада)</div>;
-const TsdScanPage = () => <div style={{ padding: '2rem' }}>Интерфейс ТСД: Сканирование автозапчастей</div>;
-
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => (
-    <div className="dashboard-layout">
-        <aside style={{ width: '250px', background: '#1e293b', padding: '1rem', height: '100vh', float: 'left' }}>
-            <h3 style={{ color: '#f59e0b' }}>WMS Панель</h3>
-        </aside>
-        <main style={{ marginLeft: '250px', padding: '2rem' }}>{children}</main>
-    </div>
-);
+const DashboardHome = () => <h2 style={{ color: '#fff' }}>📊 Сводная аналитика заполняемости склада</h2>;
+const PartsPage = () => <h2 style={{ color: '#fff' }}>⚙️ База автозапчастей, брендов и кросс-номеров</h2>;
+const CellsPage = () => <h2 style={{ color: '#fff' }}>🗄️ Топология склада: Адресные ячейки адресного хранения</h2>;
+const EmployeesPage = () => <h2 style={{ color: '#fff' }}>👥 Закрепленный инвентарь и логи действий сотрудников</h2>;
+const TsdScanPage = () => <div style={{ padding: '2rem', color: '#fff' }}>Интерфейс ТСД: Сканирование автозапчастей</div>;
 
 const TsdLayout = ({ children }: { children: React.ReactNode }) => (
     <div className="tsd-layout" style={{ maxWidth: '450px', margin: '0 auto', background: '#0f172a', minHeight: '100vh' }}>
@@ -26,7 +23,10 @@ const TsdLayout = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const router = createBrowserRouter([
-    // 1. Публичные маршруты (Авторизация)
+    {
+        path: '/',
+        element: <LandingPage />
+    },
     {
         path: '/login',
         element: <LoginPage />
@@ -36,29 +36,49 @@ export const router = createBrowserRouter([
         element: <RegisterPage />
     },
 
-    // 2. Маршруты Личного Кабинета компании (для ПК)
+    // Группа страниц личного кабинета под единым DashboardLayout
     {
         path: '/dashboard',
+        // Защищаем и оборачиваем в Layout всю ветку маршрутов целиком
         element: (
-            <DashboardLayout>
-                <DashboardPage />
-            </DashboardLayout>
-        )
+            <ProtectedRoute allowedRoles={['ADMIN', 'STOREKEEPER']}>
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
+        // Все дочерние пути пишутся относительно родительского /dashboard
+        children: [
+            {
+                path: '',
+                element: <DashboardHome />
+            },
+            {
+                path: 'parts',
+                element: <PartsPage />
+            },
+            {
+                path: 'cells',
+                element: <CellsPage />
+            },
+            {
+                path: 'employees',
+                element: <EmployeesPage />
+            }
+        ]
     },
-
-    // 3. Маршруты Терминала Сбора Данных (для ТСД кладовщиков)
+    // Маршруты Терминала Сбора Данных (для ТСД кладовщиков)
     {
         path: '/tsd/scan',
         element: (
-            <TsdLayout>
-                <TsdScanPage />
-            </TsdLayout>
+            <ProtectedRoute allowedRoles={['ADMIN', 'STOREKEEPER', 'PICKER']}>
+                <TsdLayout>
+                    <TsdScanPage />
+                </TsdLayout>
+            </ProtectedRoute>
         )
     },
 
-    // 4. Перенаправление со всех неизвестных страниц на логин
     {
         path: '*',
-        element: <Navigate to="/login" replace />
+        element: <Navigate to="/" replace />
     }
 ]);

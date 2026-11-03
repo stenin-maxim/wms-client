@@ -8,12 +8,13 @@ import styles from './login.module.scss';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [serverError, setServerError] = useState('');
     
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const location = useLocation();
 
-    const [login, { isLoading, error }] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,14 +28,20 @@ export default function LoginPage() {
                 navigate(from, { replace: true });
             } else {
                 // Если ссылки не было, разделяем потоки по ролям
-                if (userData.user.role === 'worker') {
+                if (userData.user.role === 'STOREKEEPER' || userData.user.role === 'PICKER') {
                     navigate('/tsd/scan', { replace: true });
                 } else {
                     navigate('/dashboard', { replace: true });
                 }
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error('Ошибка авторизации:', err);
+            // Выводим точный текст ошибки от нашего Java-исключения
+            if (err?.data?.message) {
+                setServerError(err.data.message);
+            } else {
+                setServerError('Неверный email или пароль');
+            }
         }
     };
 
@@ -48,9 +55,10 @@ export default function LoginPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.loginForm}>
-                    {error && (
+                    {/* Вывод динамического текста ошибки */}
+                    {serverError && (
                         <div className={styles.errorMessage}>
-                            Неверный email или пароль
+                            {serverError}
                         </div>
                     )}
                     
