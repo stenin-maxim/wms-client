@@ -1,0 +1,218 @@
+.layoutContainer {
+    display: flex;
+    min-height: 100vh;
+    background-color: $bg-dark;
+}
+
+// --- БОКОВОЕ МЕНЮ (SIDEBAR) ---
+.sidebar {
+    width: 16rem; // 256px
+    background-color: $bg-card;
+    border-right: 1px solid rgba($border-color, 0.3);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+
+    .sidebarHeader {
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba($border-color, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        .logoIcon {
+            font-size: 1.5rem;
+        }
+
+        .logoText {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: $primary-amber;
+            letter-spacing: -0.025em;
+        }
+    }
+
+    .navigation {
+        flex: 1;
+        padding: 1.5rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .navLink {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: $text-muted;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: rgba($text-light, 0.05);
+                color: $text-light;
+            }
+
+            &.active {
+                background-color: rgba($primary-amber, 0.1);
+                color: $primary-amber;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .sidebarFooter {
+        padding: 1rem;
+        border-top: 1px solid rgba($border-color, 0.3);
+        font-size: 0.75rem;
+        color: rgba($text-muted, 0.6);
+        text-align: center;
+    }
+}
+
+// --- ОСНОВНОЙ КОНТЕНТНЫЙ БЛОК ---
+.mainWrapper {
+    flex: 1;
+    margin-left: 16rem; // Смещаем контент вправо на ширину сайдбара
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+// --- ВЕРХНЯЯ ШАПКА (HEADER) ---
+.header {
+    height: 4.5rem; // 72px
+    background-color: $bg-card;
+    border-bottom: 1px solid rgba($border-color, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+
+    .companyInfo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .badge {
+            background-color: rgba($info-blue, 0.1);
+            color: $info-blue;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba($info-blue, 0.2);
+        }
+
+        h1 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: $text-light;
+            margin: 0;
+        }
+    }
+
+    .userControl {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+
+        .profileCard {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+
+            .userName {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: $text-light;
+            }
+
+            .userRole {
+                font-size: 0.75rem;
+                color: $primary-amber;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-weight: 700;
+            }
+        }
+
+        .logoutBtn {
+            background-color: rgba($error, 0.1);
+            color: $error;
+            border: 1px solid rgba($error, 0.2);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: $error;
+                color: #020617;
+                border-color: $error;
+            }
+        }
+    }
+}
+
+// --- ЗОНА ВЫВОДА СТРАНИЦ ---
+.contentArea {
+    flex: 1;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f8f9fa;
+    font-family: sans-serif;
+    color: #4b5563;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+// Простая адаптивность для средних экранов (планшеты)
+@media (max-width: 768px) {
+    .sidebar {
+        width: 4.5rem;
+        
+        .logoText, .navText, .sidebarFooter {
+            display: none;
+        }
+        
+        .sidebarHeader {
+            justify-content: center;
+            padding: 1.5rem 0;
+        }
+        
+        .navigation {
+            padding: 1.5rem 0.5rem;
+            align-items: center;
+            
+            .navLink {
+                padding: 0.75rem;
+                justify-content: center;
+                width: 100%;
+            }
+        }
+    }
+    
+    .mainWrapper {
+        margin-left: 4.5rem;
+    }
+}
