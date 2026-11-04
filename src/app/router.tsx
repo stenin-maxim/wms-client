@@ -5,11 +5,11 @@ import LoginPage from '@/pages/auth/login/LoginPage';
 import RegisterPage from '@/pages/auth/register/RegisterPage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'; 
+import CellsPage from '@/pages/dashboard/CellsPage';
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
 const DashboardHome = () => <h2 style={{ color: '#fff' }}>📊 Сводная аналитика заполняемости склада</h2>;
 const PartsPage = () => <h2 style={{ color: '#fff' }}>⚙️ База автозапчастей, брендов и кросс-номеров</h2>;
-const CellsPage = () => <h2 style={{ color: '#fff' }}>🗄️ Топология склада: Адресные ячейки адресного хранения</h2>;
 const EmployeesPage = () => <h2 style={{ color: '#fff' }}>👥 Закрепленный инвентарь и логи действий сотрудников</h2>;
 const TsdScanPage = () => <div style={{ padding: '2rem', color: '#fff' }}>Интерфейс ТСД: Сканирование автозапчастей</div>;
 
