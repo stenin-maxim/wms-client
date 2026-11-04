@@ -1,5 +1,6 @@
 // src/features/auth/authApi.js
 import { baseApi } from '@/api/baseApi'; // Импортируем наш глобальный API
+import { type UserProfile } from './authSlice';
 
 // Расширяем глобальный API эндпоинтами для логина/регистрации
 export const authApi = baseApi.injectEndpoints({
@@ -20,8 +21,13 @@ export const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Auth'],
         }),
+        // Автоматический запрос профиля по токену
+        getMe: builder.query<UserProfile, void>({
+            query: () => 'auth/me',
+            providesTags: ['Auth'],
+        }),
     }),
 });
 
 // RTK Query автоматически сгенерирует хук, привязанный к общему стору
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGetMeQuery } = authApi;

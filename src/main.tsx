@@ -4,12 +4,16 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { store } from '@/app/store';
 import { router } from '@/app/router';
+import AppInitializer from '@/app/AppInitializer';
 import '@/styles/index.scss'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
-            <RouterProvider router={router} />
+            {/* Обернули роутер в автоматический восстановитель сессии */}
+            <AppInitializer>
+                <RouterProvider router={router} />
+            </AppInitializer>
         </Provider>
     </StrictMode>,
 )

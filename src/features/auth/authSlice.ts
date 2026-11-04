@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-interface UserProfile {
+export interface UserProfile {
     id: string;
     name: string;
     email: string;
@@ -52,8 +52,12 @@ const authSlice = createSlice({
             
             localStorage.removeItem(TOKEN_KEY);
         },
+        updateUser: (state, action: PayloadAction<UserProfile>) => {
+            state.user = action.payload;
+            state.isAuthenticated = true;
+        },
     },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, updateUser } = authSlice.actions;
 export default authSlice.reducer;
