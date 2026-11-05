@@ -8,7 +8,8 @@ import {
     Wrench, 
     Boxes, 
     Users, 
-    LogOut 
+    LogOut,
+    Layers
 } from 'lucide-react';
 import { ROLE_LABELS } from '@/shared/constants/roles';
 import styles from './dashboard.module.scss';
@@ -71,6 +72,11 @@ export default function DashboardLayout() {
                     <NavLink to="/dashboard/employees" className={getNavLinkClass}>
                         <Users size={20} />
                         <span className={styles.navText}>Учет сотрудников</span>
+                    </NavLink>
+
+                    <NavLink to="/dashboard/stocks" className={getNavLinkClass}>
+                        <Layers size={20} />
+                        <span className={styles.navText}>Карта остатков</span>
                     </NavLink>
                 </nav>
 

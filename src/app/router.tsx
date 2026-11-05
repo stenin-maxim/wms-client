@@ -8,6 +8,7 @@ import DashboardLayout from '@/layouts/dashboard/DashboardLayout';
 import CellsPage from '@/pages/dashboard/cells/CellsPage';
 import EmployeesPage from '@/pages/dashboard/employees/EmployeesPage';
 import ProductsPage from '@/pages/dashboard/products/ProductsPage';
+import StocksPage from '@/pages/dashboard/stocks/StocksPage';
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
 const DashboardHome = () => <h2 style={{ color: '#fff' }}>📊 Сводная аналитика заполняемости склада</h2>;
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
             {
                 path: 'employees',
                 element: <EmployeesPage />
+            },
+            {
+                path: 'stocks',
+                element: <StocksPage />
             }
         ]
     },

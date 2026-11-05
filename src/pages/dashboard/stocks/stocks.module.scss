@@ -1,0 +1,235 @@
+.stocksPage, .stocksPage * {
+    box-sizing: border-box;
+}
+
+.stocksPage {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: $text-light;
+    width: 100%;
+}
+
+.pageHeader {
+    margin-bottom: 24px;
+
+    h2 {
+        margin: 0 0 6px 0;
+        font-size: 24px;
+        color: $text-light;
+    }
+
+    p {
+        margin: 0;
+        color: $text-muted;
+        font-size: 14px;
+    }
+}
+
+.titleBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $primary-amber;
+}
+
+.filterCard {
+    background: $bg-card;
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid $border-color;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.searchWrapper {
+    display: flex;
+    align-items: center;
+    background: $bg-input;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    padding: 2px 12px;
+    width: 100%;
+
+    &:focus-within {
+        border-color: $primary-amber;
+    }
+}
+
+.searchIcon {
+    color: $text-muted;
+    margin-right: 10px;
+}
+
+.searchInput {
+    background: transparent;
+    border: none;
+    color: $text-light;
+    padding: 10px 0;
+    font-size: 14px;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: rgba($text-muted, 0.5);
+    }
+}
+
+.cardTable {
+    background: $bg-card;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid $border-color;
+    width: 100%;
+    overflow: hidden;
+
+    h3 {
+        margin: 0 0 20px 0;
+        font-size: 16px;
+        color: $text-light;
+        font-weight: 600;
+    }
+}
+
+.tableWrapper {
+    width: 100%;
+}
+
+.wmsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+
+    tr {
+        border-bottom: 1px solid $border-color;
+    }
+
+    th, td {
+        padding: 12px;
+    }
+
+    th {
+        background: rgba($bg-dark, 0.4);
+        color: $text-light;
+        font-weight: 600;
+    }
+
+    tbody tr:hover {
+        background: rgba($bg-input, 0.3);
+    }
+}
+
+.addressText {
+    font-weight: 700;
+}
+
+.cellBadge {
+    background: rgba($primary-amber, 0.15);
+    color: $primary-amber;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba($primary-amber, 0.3);
+    width: fit-content;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.productBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.productName {
+    font-weight: 500;
+    color: $text-light;
+}
+
+.skuBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.brandText {
+    font-size: 11px;
+    color: $text-muted;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.skuText {
+    font-weight: 700;
+    color: $text-light;
+    font-family: monospace;
+}
+
+.quantityBlock {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $success;
+}
+
+.quantityText {
+    font-weight: 700;
+}
+
+.dateBlock {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $text-muted;
+    font-size: 13px;
+}
+
+.empty, .loading {
+    text-align: center;
+    color: $text-muted;
+    padding: 40px 0;
+}
+
+// =========================================================================
+// МЕДИА-ЗАПРОСЫ ДЛЯ СМАРТФОНОВ И ТСД
+// =========================================================================
+@media (max-width: 768px) {
+    .cardTable {
+        padding: 10px;
+    }
+
+    .wmsTable {
+        thead {
+            display: none;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+            background: rgba($bg-dark, 0.2);
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid $border-color;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba($border-color, 0.3);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &::before {
+                content: attr(data-label);
+                font-weight: 500;
+                color: $text-muted;
+                font-size: 13px;
+            }
+        }
+    }
+}
