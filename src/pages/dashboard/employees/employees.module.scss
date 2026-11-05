@@ -10,8 +10,18 @@
 
 .pageHeader {
     margin-bottom: 24px;
-    h2 { margin: 0 0 6px 0; font-size: 24px; color: $text-light; }
-    p { margin: 0; color: $text-muted; font-size: 14px; }
+
+    h2 { 
+        margin: 0 0 6px 0; 
+        font-size: 24px; 
+        color: $text-light; 
+    }
+
+    p { 
+        margin: 0; 
+        color: $text-muted; 
+        font-size: 14px; 
+    }
 }
 
 .titleBlock {
@@ -26,7 +36,7 @@
     grid-template-columns: 350px 1fr;
     gap: 24px;
     width: 100%;
-    align-items: stretch; // ВЫРАВНИВАНИЕ ПО ВЫСОТЕ
+    align-items: stretch;
 }
 
 .card {
@@ -38,7 +48,13 @@
     max-width: 350px;
     display: flex;
     flex-direction: column;
-    h3 { margin: 0 0 20px 0; font-size: 16px; color: $text-light; font-weight: 600; }
+
+    h3 { 
+        margin: 0 0 20px 0; 
+        font-size: 16px; 
+        color: $text-light; 
+        font-weight: 600; 
+    }
 }
 
 .cardTable {
@@ -50,7 +66,13 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    h3 { margin: 0 0 20px 0; font-size: 16px; color: $text-light; font-weight: 600; }
+
+    h3 { 
+        margin: 0 0 20px 0; 
+        font-size: 16px; 
+        color: $text-light; 
+        font-weight: 600; 
+    }
 }
 
 .employeeForm {
@@ -66,7 +88,13 @@
     flex-direction: column;
     gap: 6px;
     width: 100%;
-    label { font-size: 13px; color: $text-muted; font-weight: 500; }
+
+    label { 
+        font-size: 13px; 
+        color: $text-muted; 
+        font-weight: 500; 
+    }
+
     input, select {
         width: 100%;
         padding: 10px;
@@ -76,11 +104,20 @@
         font-size: 14px;
         color: $text-light;
         transition: border-color 0.2s;
-        &:focus { border-color: $primary-amber; outline: none; }
+
+        &:focus { 
+            border-color: $primary-amber; 
+            outline: none; 
+        }
     }
+
     select {
         cursor: pointer;
-        option { background: $bg-card; color: $text-light; }
+
+        option { 
+            background: $bg-card; 
+            color: $text-light; 
+        }
     }
 }
 
@@ -100,8 +137,16 @@
     cursor: pointer;
     margin-top: auto;
     transition: background 0.2s;
-    &:hover { background: $primary-hover; }
-    &:disabled { background: $border-color; color: $text-muted; cursor: not-allowed; }
+
+    &:hover { 
+        background: $primary-hover; 
+    }
+
+    &:disabled { 
+        background: $border-color; 
+        color: $text-muted; 
+        cursor: not-allowed; 
+    }
 }
 
 .errorMsg {
@@ -124,9 +169,21 @@
     border-collapse: collapse;
     font-size: 14px;
     text-align: left;
-    th, td { padding: 12px; border-bottom: 1px solid $border-color; }
-    th { background: rgba($bg-dark, 0.4); color: $text-light; font-weight: 600; }
-    tbody tr:hover { background: rgba($bg-input, 0.3); }
+
+    th, td { 
+        padding: 12px; 
+        border-bottom: 1px solid $border-color; 
+    }
+
+    th { 
+        background: rgba($bg-dark, 0.4); 
+        color: $text-light; 
+        font-weight: 600; 
+    }
+
+    tbody tr:hover { 
+        background: rgba($bg-input, 0.3); 
+    }
 }
 
 .statusBadge {
@@ -135,44 +192,145 @@
     font-size: 12px;
     font-weight: 600;
     display: inline-block;
-    &.active { background: rgba($success, 0.15); color: #86efac; border: 1px solid rgba($success, 0.3); }
-    &.blocked { background: rgba($error, 0.15); color: #fca5a5; border: 1px solid rgba($error, 0.3); }
+
+    &.active { 
+        background: rgba($success, 0.15); 
+        color: #86efac; 
+        border: 1px solid rgba($success, 0.3); 
+    }
+
+    &.blocked { 
+        background: rgba($error, 0.15); 
+        color: #fca5a5; 
+        border: 1px solid rgba($error, 0.3); 
+    }
 }
 
 .actionBtn {
-    background: $bg-input; border: 1px solid $border-color; padding: 6px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; color: $text-light; transition: all 0.2s;
-    &.block:hover { background: rgba($error, 0.2); color: #fca5a5; border-color: $error; }
-    &.unblock:hover { background: rgba($success, 0.2); color: #86efac; border-color: $success; }
+    background: $bg-input; 
+    border: 1px solid $border-color; 
+    padding: 6px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    color: $text-light; 
+    transition: all 0.2s;
+
+    &.block:hover { 
+        background: rgba($error, 0.2); 
+        color: #fca5a5; 
+        border-color: $error; 
+    }
+
+    &.unblock:hover { 
+        background: rgba($success, 0.2); 
+        color: #86efac; 
+        border-color: $success; 
+    }
 }
 
-.nameText { font-weight: 600; color: $text-light; align-items: center; gap: 8px; }
-.emailText { color: $text-muted; font-family: monospace; }
-.roleTag { color: #93c5fd; background: rgba($info-blue, 0.15); padding: 2px 8px; border-radius: 4px; font-size: 13px; }
-.meBadge { background: rgba($primary-amber, 0.2); color: $primary-amber; font-size: 11px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
-.rowMe { background: rgba($primary-amber, 0.03); }
-.actions { gap: 8px; align-items: center; }
-.lockText { font-size: 12px; color: $text-muted; font-style: italic; }
-.loading { text-align: center; color: $text-muted; padding: 40px 0; }
+.nameText { 
+    font-weight: 600; 
+    color: $text-light; 
+    align-items: center; 
+    gap: 8px; 
+}
+
+.emailText { 
+    color: $text-muted; 
+    font-family: monospace; 
+}
+
+.roleTag { 
+    color: #93c5fd; 
+    background: rgba($info-blue, 0.15); 
+    padding: 2px 8px; 
+    border-radius: 4px; 
+    font-size: 13px; 
+}
+
+.meBadge { 
+    background: rgba($primary-amber, 0.2); 
+    color: $primary-amber; 
+    font-size: 11px; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-weight: bold; 
+}
+
+.rowMe { 
+    background: rgba($primary-amber, 0.03); 
+}
+
+.actions { 
+    gap: 8px; 
+    align-items: center; 
+}
+
+.lockText { 
+    font-size: 12px; 
+    color: $text-muted; 
+    font-style: italic; 
+}
+
+.loading { 
+    text-align: center; 
+    color: $text-muted; 
+    padding: 40px 0; 
+}
 
 @media (max-width: 900px) {
-    .dashboardGrid { grid-template-columns: 1fr; }
-    .card { max-width: 100%; }
+    .dashboardGrid { 
+        grid-template-columns: 1fr; 
+    }
+
+    .card { 
+        max-width: 100%; 
+    }
 }
 
 @media (max-width: 600px) {
-    .cardTable { padding: 10px; }
+    .cardTable { 
+        padding: 10px; 
+    }
+
     .wmsTable {
-        thead { display: none; } // Скрываем шапку на мобилках
-        tr {
-            display: flex; flex-direction: column; background: rgba($bg-dark, 0.2);
-            margin-bottom: 12px; padding: 12px; border-radius: 8px; border: 1px solid $border-color;
+        thead { 
+            display: none; 
         }
+
+        tr {
+            display: flex; 
+            flex-direction: column; 
+            background: rgba($bg-dark, 0.2);
+            margin-bottom: 12px; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid $border-color;
+        }
+
         td {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 0; border-bottom: 1px solid rgba($border-color, 0.3);
-            &:last-child { border-bottom: none; }
-            &::before { content: attr(data-label); font-weight: 500; color: $text-muted; font-size: 13px; }
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 8px 0; 
+            border-bottom: 1px solid rgba($border-color, 0.3);
+
+            &:last-child { 
+                border-bottom: none; 
+            }
+
+            &::before { 
+                content: attr(data-label); 
+                font-weight: 500; 
+                color: $text-muted; 
+                font-size: 13px; 
+            }
         }
     }
-    .nameBlock { width: 100%; }
+
+    .nameBlock { 
+        width: 100%; 
+    }
 }
