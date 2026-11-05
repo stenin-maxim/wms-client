@@ -7,6 +7,7 @@ import {
     useLazyGetCellLabelQuery 
 } from '@/features/cells/cellsApi';
 import { Boxes, Plus, ShieldAlert, ShieldCheck, Printer } from 'lucide-react';
+import { downloadZplFile } from '@/shared/utils/downloadZpl';
 import styles from './cells.module.scss';
 
 export default function CellsPage() {
@@ -66,12 +67,7 @@ export default function CellsPage() {
     const handlePrintLabel = async (id: string, address: string) => {
         try {
             const res = await triggerGetLabel(id).unwrap();
-            // Скачиваем ZPL как текстовый файл этикетки
-            const blob = new Blob([res.zplCode], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `label_cell_${address}.zpl`;
-            link.click();
+            downloadZplFile(res.zplCode, `label_cell_${address}`); // Вызываем единый хелпер скачивания
         } catch (err) {
             alert('Не удалось получить код этикетки');
         }
