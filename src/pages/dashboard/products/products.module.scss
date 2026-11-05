@@ -1,0 +1,319 @@
+// src/pages/dashboard/products/products.module.scss
+.productsPage, .productsPage * {
+    box-sizing: border-box;
+}
+
+.productsPage {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: $text-light;
+    width: 100%;
+}
+
+.pageHeader {
+    margin-bottom: 24px;
+
+    h2 { 
+        margin: 0 0 6px 0; 
+        font-size: 24px; 
+        color: $text-light; 
+    }
+
+    p { 
+        margin: 0; 
+        color: $text-muted; 
+        font-size: 14px; 
+    }
+}
+
+.titleBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $primary-amber;
+}
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 24px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.card {
+    background: $bg-card; 
+    border-radius: 10px; 
+    padding: 20px; 
+    border: 1px solid $border-color; 
+    width: 100%; 
+    max-width: 350px;
+    display: flex; 
+    flex-direction: column;
+
+    h3 { 
+        margin: 0 0 20px 0; 
+        font-size: 16px; 
+        color: $text-light; 
+        font-weight: 600; 
+    }
+}
+
+.cardTable {
+    background: $bg-card; 
+    border-radius: 10px; 
+    padding: 20px; 
+    border: 1px solid $border-color; 
+    width: 100%; 
+    overflow: hidden;
+    display: flex; 
+    flex-direction: column;
+
+    h3 { 
+        margin: 0 0 20px 0; 
+        font-size: 16px; 
+        color: $text-light; 
+        font-weight: 600; 
+    }
+}
+
+.productForm {
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+    height: 100%;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+
+    label { 
+        font-size: 13px;
+        color: $text-muted;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%; 
+        padding: 10px; 
+        background-color: $bg-input; 
+        border: 1px solid $border-color; 
+        border-radius: 6px; 
+        font-size: 14px; 
+        color: $text-light;
+
+        &:focus { 
+            border-color: $primary-amber; 
+            outline: none; 
+        }
+    }
+}
+
+.addBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $primary-amber; 
+    color: $bg-dark;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px; 
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background 0.2s;
+
+    &:hover { 
+        background: $primary-hover; 
+    }
+
+    &:disabled { 
+        background: $border-color; 
+        color: $text-muted; 
+        cursor: not-allowed; 
+    }
+}
+
+.errorMsg {
+    background: rgba($error, 0.15); 
+    color: #fca5a5; 
+    padding: 10px; 
+    border-radius: 6px; 
+    font-size: 13px; 
+    border: 1px solid rgba($error, 0.4);
+}
+
+.tableWrapper { 
+    width: 100%; 
+    flex-grow: 1; 
+}
+
+.wmsTable {
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 14px; 
+    text-align: left;
+
+    tr {
+        border-bottom: 1px solid $border-color; 
+    }
+
+    th, td { 
+        padding: 12px; 
+    }
+
+    th { 
+        background: rgba($bg-dark, 0.4); 
+        color: $text-light; 
+        font-weight: 600; 
+    }
+
+    tbody tr:hover { 
+        background: rgba($bg-input, 0.3); 
+    }
+}
+
+.skuBlock { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2px; 
+}
+
+.brandText { 
+    font-size: 12px; 
+    color: $text-muted; 
+    text-transform: uppercase; 
+    font-weight: 600; 
+}
+
+.skuText { 
+    font-weight: 700; 
+    color: $primary-amber; 
+    font-family: monospace; 
+    font-size: 15px; 
+}
+
+.nameText { 
+    font-weight: 500; 
+    color: $text-light; 
+}
+
+.barcodeWrapper { 
+    display: flex; 
+    align-items: center; 
+    gap: 6px; 
+    color: $text-muted; 
+}
+
+.code { 
+    font-family: monospace; 
+    color: $text-light; 
+    background: $bg-input; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    border: 1px solid $border-color; 
+}
+
+.noBarcode { 
+    font-size: 12px; 
+    color: $text-muted; 
+    font-style: italic; 
+}
+
+.actions { 
+    display: flex; 
+    gap: 8px; 
+}
+
+.actionBtn {
+    background: $bg-input; 
+    border: 1px solid $border-color; 
+    padding: 6px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    color: $text-light; 
+    transition: all 0.2s;
+
+    &.delete:hover { 
+        background: rgba($error, 0.2); 
+        color: #fca5a5; 
+        border-color: $error; 
+    }
+
+    &.print:hover { 
+        background: rgba($info-blue, 0.2); 
+        color: #93c5fd; 
+        border-color: $info-blue; 
+    }
+}
+
+.empty, .loading { 
+    text-align: center; 
+    color: $text-muted; 
+    padding: 40px 0; 
+}
+
+// =========================================================================
+// МЕДИА-ЗАПРОСЫ ДЛЯ СМАРТФОНОВ И ТСД
+// =========================================================================
+@media (max-width: 950px) {
+    .dashboardGrid { 
+        grid-template-columns: 1fr; 
+    }
+
+    .card { 
+        max-width: 100%; 
+    }
+}
+
+@media (max-width: 600px) {
+    .cardTable { 
+        padding: 10px; 
+    }
+
+    .wmsTable {
+        thead { 
+            display: none; 
+        }
+
+        tr {
+            display: flex; 
+            flex-direction: column; 
+            background: rgba($bg-dark, 0.2);
+            margin-bottom: 12px; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid $border-color;
+        }
+
+        td {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 8px 0; 
+            border-bottom: 1px solid rgba($border-color, 0.3);
+
+            &:last-child { 
+                border-bottom: none; 
+            }
+
+            &::before { 
+                content: attr(data-label); 
+                font-weight: 500; 
+                color: $text-muted; 
+                font-size: 13px; 
+            }
+        }
+    }
+
+    .skuBlock { 
+        width: 100%; 
+    }
+}

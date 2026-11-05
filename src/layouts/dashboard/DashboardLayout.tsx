@@ -58,9 +58,9 @@ export default function DashboardLayout() {
                         <span className={styles.navText}>Главная статистика</span>
                     </NavLink>
                     
-                    <NavLink to="/dashboard/parts" className={getNavLinkClass}>
+                    <NavLink to="/dashboard/products" className={getNavLinkClass}>
                         <Wrench size={20} />
-                        <span className={styles.navText}>Номенклатура запчастей</span>
+                        <span className={styles.navText}>Номенклатура товаров</span>
                     </NavLink>
                     
                     <NavLink to="/dashboard/cells" className={getNavLinkClass}>
