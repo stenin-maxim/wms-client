@@ -6,9 +6,11 @@ export interface UserProfile {
     id: string;
     name: string;
     email: string;
-    role: 'ADMIN' | 'STOREKEEPER' | 'PICKER'; 
+    role: 'SUPER_ADMIN' | 'ADMIN' | 'MANAGER' | 'STOREKEEPER' | 'PICKER' | 'AUDITOR';
     companyId: string;
     companyName: string;
+    assignedEquipment?: string | null;
+    status: string;
 }
 
 interface AuthState {

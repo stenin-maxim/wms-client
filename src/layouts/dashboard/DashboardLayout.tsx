@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { NavLink, useNavigate, Outlet } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks';
 import { logout } from '@/features/auth/authSlice';
@@ -10,13 +10,8 @@ import {
     Users, 
     LogOut 
 } from 'lucide-react';
+import { ROLE_LABELS } from '@/shared/constants/roles';
 import styles from './dashboard.module.scss';
-
-const ROLE_LABELS: Record<string, string> = {
-    'ADMIN': 'Владелец / Директор',
-    'STOREKEEPER': 'Старший Кладовщик',
-    'PICKER': 'Оператор отбора (ТСД)'
-};
 
 export default function DashboardLayout() {
     const navigate = useNavigate();
@@ -87,14 +82,12 @@ export default function DashboardLayout() {
                 
                <header className={styles.header}>
                     <div className={styles.companyInfo}>
-                        {/* Выводим строго реальное имя компании из PostgreSQL 16 */}
                         <h1>{user.companyName}</h1>
                         <span className={styles.badge}>SaaS Изоляция</span>
                     </div>
 
                     <div className={styles.userControl}>
                         <div className={styles.profileCard}>
-                            {/* Выводим строго имя вошедшего сотрудника */}
                             <span className={styles.userName}>{user.name}</span>
                             <span className={styles.userRole}>
                                 {ROLE_LABELS[user.role] || user.role}
