@@ -5,7 +5,7 @@ import LoginPage from '@/pages/auth/login/LoginPage';
 import RegisterPage from '@/pages/auth/register/RegisterPage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'; 
-import CellsPage from '@/pages/dashboard/CellsPage';
+import CellsPage from '@/pages/dashboard/cells/CellsPage';
 import EmployeesPage from '@/pages/dashboard/employees/EmployeesPage';
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
