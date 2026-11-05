@@ -6,11 +6,11 @@ import RegisterPage from '@/pages/auth/register/RegisterPage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'; 
 import CellsPage from '@/pages/dashboard/CellsPage';
+import EmployeesPage from '@/pages/dashboard/employees/EmployeesPage';
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
 const DashboardHome = () => <h2 style={{ color: '#fff' }}>📊 Сводная аналитика заполняемости склада</h2>;
 const PartsPage = () => <h2 style={{ color: '#fff' }}>⚙️ База автозапчастей, брендов и кросс-номеров</h2>;
-const EmployeesPage = () => <h2 style={{ color: '#fff' }}>👥 Закрепленный инвентарь и логи действий сотрудников</h2>;
 const TsdScanPage = () => <div style={{ padding: '2rem', color: '#fff' }}>Интерфейс ТСД: Сканирование автозапчастей</div>;
 
 const TsdLayout = ({ children }: { children: React.ReactNode }) => (
