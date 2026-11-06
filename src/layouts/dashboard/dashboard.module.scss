@@ -65,6 +65,22 @@
                 font-weight: 600;
             }
         }
+
+        .navGroupTitle {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: $text-muted; // Используем единую переменную палитры
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            padding-left: 12px;
+            opacity: 0.7;
+            
+            &:first-child {
+                margin-top: 5px; // Убираем лишний отступ у самого первого заголовка меню
+            }
+        }
     }
 
     .sidebarFooter {

@@ -9,7 +9,8 @@ import {
     Boxes, 
     Users, 
     LogOut,
-    Layers
+    Layers,
+    History
 } from 'lucide-react';
 import { ROLE_LABELS } from '@/shared/constants/roles';
 import styles from './dashboard.module.scss';
@@ -54,32 +55,43 @@ export default function DashboardLayout() {
                 </div>
 
                 <nav className={styles.navigation}>
+                    {/* АНАЛИТИКА */}
+                    <div className={styles.navGroupTitle}>Аналитика склада</div>
                     <NavLink to="/dashboard" end className={getNavLinkClass}>
-                        <LayoutDashboard size={20} />
+                        <LayoutDashboard size={18} />
                         <span className={styles.navText}>Главная статистика</span>
                     </NavLink>
                     
+                    <NavLink to="/dashboard/stocks" className={getNavLinkClass}>
+                        <Layers size={18} />
+                        <span className={styles.navText}>Карта остатков</span>
+                    </NavLink>
+
+                    <NavLink to="/dashboard/history" className={getNavLinkClass}>
+                        <History size={18} />
+                        <span className={styles.navText}>Журнал аудита</span>
+                    </NavLink>
+
+                    {/* НОМЕНКЛАТУРА И ТОПОЛОГИЯ */}
+                    <div className={styles.navGroupTitle}>Инфраструктура</div>
                     <NavLink to="/dashboard/products" className={getNavLinkClass}>
-                        <Wrench size={20} />
+                        <Wrench size={18} />
                         <span className={styles.navText}>Номенклатура товаров</span>
                     </NavLink>
                     
                     <NavLink to="/dashboard/cells" className={getNavLinkClass}>
-                        <Boxes size={20} />
+                        <Boxes size={18} />
                         <span className={styles.navText}>Ячейки хранения</span>
                     </NavLink>
-                    
+
+                    {/* ПЕРСОНАЛ */}
+                    <div className={styles.navGroupTitle}>Ресурсы</div>
                     <NavLink to="/dashboard/employees" className={getNavLinkClass}>
-                        <Users size={20} />
+                        <Users size={18} />
                         <span className={styles.navText}>Учет сотрудников</span>
                     </NavLink>
-
-                    <NavLink to="/dashboard/stocks" className={getNavLinkClass}>
-                        <Layers size={20} />
-                        <span className={styles.navText}>Карта остатков</span>
-                    </NavLink>
                 </nav>
-
+                
                 <div className={styles.sidebarFooter}>v1.0.0 Alpha</div>
             </aside>
 
