@@ -20,7 +20,7 @@ export const productsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getProducts: builder.query<ProductDto[], void>({
             query: () => 'products',
-            providesTags: ['Parts'],
+            providesTags: ['Products'],
         }),
         createProduct: builder.mutation<ProductDto, CreateProductRequest>({
             query: (newProduct) => ({
@@ -28,14 +28,14 @@ export const productsApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body: newProduct,
             }),
-            invalidatesTags: ['Parts'], // Автоматически перерисует таблицу
+            invalidatesTags: ['Products'], // Автоматически перерисует таблицу
         }),
         deleteProduct: builder.mutation<void, string>({
             query: (id) => ({
                 url: `products/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Parts'],
+            invalidatesTags: ['Products'],
         }),
         // GET-запрос ZPL-кода этикетки детали для принтера
         getProductLabel: builder.query<{ zplCode: string }, string>({

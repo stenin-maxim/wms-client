@@ -64,11 +64,11 @@ export default function ProductsPage() {
     };
 
     return (
-        <div className={styles.partsPage}>
+        <div className={styles.productsPage}>
             <div className={styles.pageHeader}>
                 <div className={styles.titleBlock}>
                     <Wrench size={28} />
-                    <h2>Номенклатура автозапчастей</h2>
+                    <h2>Номенклатура товаров</h2>
                 </div>
                 <p>Каталог деталей, уникальных артикулов SKU и управление штрихкодами маркировки</p>
             </div>
