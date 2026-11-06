@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseApi = createApi({
     reducerPath: 'api',
-    // 1. Централизованная настройка базового URL и заголовков
+    // Централизованная настройка базового URL и заголовков
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL,
         prepareHeaders: (headers) => {
@@ -14,8 +14,8 @@ export const baseApi = createApi({
             return headers;
         },
     }),
-    // 2. Глобальный список тегов для автоматического обновления данных склада
-    tagTypes: ['Auth', 'Parts', 'Cells', 'Stocks'],
+    // Глобальный список тегов для автоматического обновления данных склада
+    tagTypes: ['Auth', 'Products', 'Cells', 'Stocks', 'Invoices'],
     // На верхнем уровне endpoints оставляем пустым
     endpoints: () => ({}),
 });

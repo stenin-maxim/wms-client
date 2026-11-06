@@ -10,7 +10,8 @@ import {
     Users, 
     LogOut,
     Layers,
-    History
+    History,
+    FileText
 } from 'lucide-react';
 import { ROLE_LABELS } from '@/shared/constants/roles';
 import styles from './dashboard.module.scss';
@@ -70,6 +71,13 @@ export default function DashboardLayout() {
                     <NavLink to="/dashboard/history" className={getNavLinkClass}>
                         <History size={18} />
                         <span className={styles.navText}>Журнал аудита</span>
+                    </NavLink>
+
+                    {/* ДОКУМЕНТЫ */}
+                    <div className={styles.navGroupTitle}>Документы склада</div>
+                    <NavLink to="/dashboard/invoices" className={getNavLinkClass}>
+                        <FileText size={18} />
+                        <span className={styles.navText}>Поступления</span>
                     </NavLink>
 
                     {/* НОМЕНКЛАТУРА И ТОПОЛОГИЯ */}
