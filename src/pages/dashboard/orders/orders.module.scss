@@ -1,0 +1,406 @@
+.ordersPage, .ordersPage * {
+    box-sizing: border-box;
+}
+
+.ordersPage {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: $text-light;
+    width: 100%;
+}
+
+.pageHeader {
+    margin-bottom: 24px;
+
+    h2 {
+        margin: 0 0 6px 0;
+        font-size: 24px;
+        color: $text-light;
+    }
+
+    p {
+        margin: 0;
+        color: $text-muted;
+        font-size: 14px;
+    }
+}
+
+.titleBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $primary-amber;
+}
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    width: 100%;
+    align-items: stretch;
+}
+
+.card {
+    background: $bg-card;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid $border-color;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        margin: 0 0 20px 0;
+        font-size: 16px;
+        color: $text-light;
+        font-weight: 600;
+    }
+}
+
+.cardTable {
+    background: $bg-card;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid $border-color;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+        margin: 0 0 20px 0;
+        font-size: 16px;
+        color: $text-light;
+        font-weight: 600;
+    }
+}
+
+.orderForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+
+    label {
+        font-size: 13px;
+        color: $text-muted;
+        font-weight: 500;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        background-color: $bg-input;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        font-size: 14px;
+        color: $text-light;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: $primary-amber;
+            outline: none;
+        }
+    }
+
+    select {
+        cursor: pointer;
+
+        option {
+            background: $bg-card;
+            color: $text-light;
+        }
+    }
+}
+
+.itemsSection {
+    border-top: 1px solid $border-color;
+    padding-top: 14px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sectionLabel {
+    font-size: 13px;
+    color: $primary-amber;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.itemRowGrid {
+    display: grid;
+    grid-template-columns: 1fr 75px auto;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+}
+
+.removeRowBtn {
+    background: transparent;
+    border: none;
+    color: $error;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+
+    &:hover {
+        color: #fca5a5;
+    }
+}
+
+.addRowBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px dashed $primary-amber;
+    color: $primary-amber;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+
+    &:hover {
+        background: rgba($primary-amber, 0.08);
+    }
+}
+
+.addBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $primary-amber;
+    color: $bg-dark;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background 0.2s;
+
+    &:hover {
+        background: $primary-hover;
+    }
+
+    &:disabled {
+        background: $border-color;
+        color: $text-muted;
+        cursor: not-allowed;
+    }
+}
+
+.errorMsg {
+    background: rgba($error, 0.15);
+    color: #fca5a5;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid rgba($error, 0.4);
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.orderDocumentCard {
+    background: rgba($bg-dark, 0.3);
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.docHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    border-bottom: 1px solid rgba($border-color, 0.5);
+    padding-bottom: 10px;
+}
+
+.docMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.docNumber {
+    font-weight: 700;
+    color: $text-light;
+    font-size: 15px;
+}
+
+.docCustomer {
+    color: $text-muted;
+    font-size: 13px;
+}
+
+.statusBadge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.pending {
+        background: rgba($info-blue, 0.15);
+        color: #93c5fd;
+        border: 1px solid rgba($info-blue, 0.3);
+    }
+
+    &.processing {
+        background: rgba($warning, 0.15);
+        color: #fde047;
+        border: 1px solid rgba($warning, 0.3);
+    }
+
+    &.completed {
+        background: rgba($success, 0.15);
+        color: #86efac;
+        border: 1px solid rgba($success, 0.3);
+    }
+
+    &.canceled {
+        background: rgba($error, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba($error, 0.3);
+    }
+}
+
+.docItemsTableWrapper {
+    width: 100%;
+}
+
+.itemsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    th {
+        background: rgba($bg-dark, 0.5);
+        color: $text-muted;
+        font-weight: 600;
+    }
+
+    tr {
+        border-bottom: 1px solid rgba($border-color, 0.3);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+.itemNameText {
+    font-weight: 500;
+    color: $text-light;
+}
+
+.itemSkuText {
+    color: $primary-amber;
+    font-family: monospace;
+}
+
+.textSuccess {
+    color: $success;
+    font-weight: 700;
+}
+
+.textWarning {
+    color: $warning;
+    font-weight: 700;
+}
+
+.itemRowDone {
+    background: rgba($success, 0.02);
+}
+
+.doneBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: $success;
+    font-weight: 600;
+}
+
+.waitBadge {
+    color: $text-muted;
+    font-style: italic;
+}
+
+.docFooter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba($text-muted, 0.7);
+    font-size: 11px;
+    border-top: 1px dashed rgba($border-color, 0.5);
+    padding-top: 8px;
+}
+
+.empty, .loading {
+    text-align: center;
+    color: $text-muted;
+    padding: 40px 0;
+}
+
+@media (max-width: 950px) {
+    .dashboardGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .docHeader {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .itemsTable {
+        thead {
+            display: none;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+            padding: 6px 0;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+    }
+}

@@ -11,7 +11,8 @@ import {
     LogOut,
     Layers,
     History,
-    FileText
+    FileText,
+    ShoppingCart
 } from 'lucide-react';
 import { ROLE_LABELS } from '@/shared/constants/roles';
 import styles from './dashboard.module.scss';
@@ -78,6 +79,11 @@ export default function DashboardLayout() {
                     <NavLink to="/dashboard/invoices" className={getNavLinkClass}>
                         <FileText size={18} />
                         <span className={styles.navText}>Поступления</span>
+                    </NavLink>
+                    
+                    <NavLink to="/dashboard/orders" className={getNavLinkClass}>
+                        <ShoppingCart size={18} />
+                        <span className={styles.navText}>Отгрузки</span>
                     </NavLink>
 
                     {/* НОМЕНКЛАТУРА И ТОПОЛОГИЯ */}

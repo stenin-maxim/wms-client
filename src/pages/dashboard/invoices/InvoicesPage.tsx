@@ -1,4 +1,4 @@
-// src/pages/dashboard/InvoicesPage.tsx
+// src/pages/dashboard/invoices/InvoicesPage.tsx
 import React, { useState } from 'react';
 import { useGetInvoicesQuery, useCreateInvoiceMutation } from '@/features/invoices/invoicesApi';
 import { useGetProductsQuery } from '@/features/products/productsApi';

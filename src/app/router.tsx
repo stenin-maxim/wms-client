@@ -11,6 +11,7 @@ import ProductsPage from '@/pages/dashboard/products/ProductsPage';
 import StocksPage from '@/pages/dashboard/stocks/StocksPage';
 import StockHistoryPage from '@/pages/dashboard/stocks/StockHistoryPage';
 import InvoicesPage from '@/pages/dashboard/invoices/InvoicesPage';
+import OrdersPage from '@/pages/dashboard/orders/OrdersPage';
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
 const DashboardHome = () => <h2 style={{ color: '#fff' }}>📊 Сводная аналитика заполняемости склада</h2>;
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
             {
                 path: 'invoices',
                 element: <InvoicesPage />
+            },
+            {
+                path: 'orders',
+                element: <OrdersPage />
             }
         ]
     },
