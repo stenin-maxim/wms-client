@@ -5,7 +5,7 @@ import { useAppSelector } from '@/hooks/reduxHooks';
 interface ProtectedRouteProps {
     children: React.ReactElement;
     // Массив разрешенных ролей для этой страницы (необязательно)
-    allowedRoles?: ('ADMIN' | 'STOREKEEPER' | 'PICKER')[];
+    allowedRoles?: ('SUPER_ADMIN' | 'ADMIN' | 'AUDITOR' | 'MANAGER' | 'STOREKEEPER' | 'PICKER')[];
 }
 
 export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {

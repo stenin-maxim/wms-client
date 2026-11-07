@@ -1,0 +1,227 @@
+.tsdContainer, .tsdContainer * {
+    box-sizing: border-box;
+}
+
+.tsdContainer {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: $text-light;
+    padding: 14px;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background-color 0.15s ease-in-out;
+
+    // Световые сигналы ТСД сканера на весь экран!
+    &.success { background-color: rgba($success, 0.15); }
+    &.error { background-color: rgba($error, 0.18); }
+    &.idle { background-color: $bg-dark; }
+}
+
+.modeTabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+}
+
+.tabBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: $bg-card;
+    border: 1px solid $border-color;
+    color: $text-muted;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: $primary-amber;
+    }
+}
+
+.activeTab {
+    background: $primary-amber;
+    color: $bg-dark;
+    border-color: $primary-amber;
+}
+
+.contextCard {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 14px;
+    width: 100%;
+}
+
+.putawaySelectors {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+
+    label {
+        font-size: 12px;
+        color: $text-muted;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 12px;
+        background-color: $bg-input;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        font-size: 15px;
+        color: $text-light;
+
+        &:focus {
+            border-color: $primary-amber;
+            outline: none;
+        }
+
+        option {
+            background: $bg-card;
+            color: $text-light;
+        }
+    }
+}
+
+.scanForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.quantitySection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+
+    label {
+        font-size: 12px;
+        color: $text-muted;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+}
+
+.qtyInput {
+    width: 100%;
+    padding: 12px;
+    background-color: $bg-input;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-size: 20px; // Крупные цифры для количества
+    font-weight: 700;
+    color: $primary-amber;
+    text-align: center;
+
+    &:focus {
+        border-color: $primary-amber;
+        outline: none;
+    }
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    background: $bg-input;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    padding: 2px 14px;
+    width: 100%;
+
+    &:focus-within {
+        border-color: $primary-amber;
+    }
+}
+
+.barcodeIcon {
+    color: $primary-amber;
+    margin-right: 12px;
+}
+
+.tsdInput {
+    background: transparent;
+    border: none;
+    color: $text-light;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: rgba($text-muted, 0.4);
+        font-weight: 400;
+    }
+}
+
+.submitBtn {
+    background: $primary-amber;
+    color: $bg-dark;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba($primary-amber, 0.2);
+    transition: background 0.2s;
+
+    &:hover {
+        background: $primary-hover;
+    }
+}
+
+.statusDisplay {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    margin-top: auto; // Прижимает плашку статуса к низу ТСД экрана
+
+    svg {
+        animation: scaleIn 0.2s ease-out;
+    }
+}
+
+.statusText {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+@keyframes scaleIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}

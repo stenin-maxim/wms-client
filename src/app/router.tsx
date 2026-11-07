@@ -1,4 +1,3 @@
-import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import LandingPage from '@/pages/landing/LandingPage';
 import LoginPage from '@/pages/auth/login/LoginPage';
@@ -13,18 +12,8 @@ import StocksPage from '@/pages/dashboard/stocks/StocksPage';
 import StockHistoryPage from '@/pages/dashboard/stocks/StockHistoryPage';
 import InvoicesPage from '@/pages/dashboard/invoices/InvoicesPage';
 import OrdersPage from '@/pages/dashboard/orders/OrdersPage';
-
-// Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
-const TsdScanPage = () => <div style={{ padding: '2rem', color: '#fff' }}>Интерфейс ТСД: Сканирование автозапчастей</div>;
-
-const TsdLayout = ({ children }: { children: React.ReactNode }) => (
-    <div className="tsd-layout" style={{ maxWidth: '450px', margin: '0 auto', background: '#0f172a', minHeight: '100vh' }}>
-        <header style={{ background: '#1e293b', padding: '1rem', textAlign: 'center', borderBottom: '2px solid #f59e0b' }}>
-            <span>ТСД Режим</span>
-        </header>
-        {children}
-    </div>
-);
+import TsdScanPage from '@/pages/tsd/TsdScanPage';
+import TsdLayout from '@/layouts/tsd/TsdLayout';
 
 export const router = createBrowserRouter([
     {
@@ -45,7 +34,7 @@ export const router = createBrowserRouter([
         path: '/dashboard',
         // Защищаем и оборачиваем в Layout всю ветку маршрутов целиком
         element: (
-            <ProtectedRoute allowedRoles={['ADMIN', 'STOREKEEPER']}>
+            <ProtectedRoute allowedRoles={['ADMIN', 'MANAGER', 'STOREKEEPER', 'AUDITOR']}>
                 <DashboardLayout />
             </ProtectedRoute>
         ),
