@@ -5,6 +5,7 @@ import LoginPage from '@/pages/auth/login/LoginPage';
 import RegisterPage from '@/pages/auth/register/RegisterPage';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'; 
+import DashboardHomePage from '@/pages/dashboard/home/DashboardHomePage';
 import CellsPage from '@/pages/dashboard/cells/CellsPage';
 import EmployeesPage from '@/pages/dashboard/employees/EmployeesPage';
 import ProductsPage from '@/pages/dashboard/products/ProductsPage';
@@ -14,7 +15,6 @@ import InvoicesPage from '@/pages/dashboard/invoices/InvoicesPage';
 import OrdersPage from '@/pages/dashboard/orders/OrdersPage';
 
 // Заглушки для будущих страниц и лейаутов, чтобы роутер не выдавал ошибки
-const DashboardHome = () => <h2 style={{ color: '#fff' }}>📊 Сводная аналитика заполняемости склада</h2>;
 const TsdScanPage = () => <div style={{ padding: '2rem', color: '#fff' }}>Интерфейс ТСД: Сканирование автозапчастей</div>;
 
 const TsdLayout = ({ children }: { children: React.ReactNode }) => (
@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <DashboardHome />
+                element: <DashboardHomePage />
             },
             {
                 path: 'products',
