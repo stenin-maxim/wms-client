@@ -22,7 +22,7 @@ export const tsdApi = baseApi.injectEndpoints({
             query: ({ invoiceId, barcodeOrSku, quantity }) => ({
                 url: `invoices/incoming/${invoiceId}/scan`,
                 method: 'POST',
-                params: { barcodeOrSku, quantity }, // Передача через RequestParam
+                body: { barcodeOrSku, quantity },
             }),
             invalidatesTags: ['Invoices', 'Stocks'],
         }),
