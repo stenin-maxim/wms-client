@@ -185,12 +185,48 @@ export default function TsdScanPage() {
             {/* ИНДИКАТОР ШТРИХКОДА И ВВОД */}
             <form onSubmit={handleTsdSubmit} className={styles.scanForm}>
                 <div className={styles.quantitySection}>
-                    <label>Количество (шт)</label>
-                    <input 
-                        type="number" min={1} required
-                        value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                        className={styles.qtyInput}
-                    />
+                    <label>Количество для обработки</label>
+                    
+                    <div className={styles.qtyControlsRow}>
+                        <button 
+                            type="button" 
+                            onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                            className={styles.qtyChangeBtn}
+                        >
+                            -1
+                        </button>
+                        <input 
+                            type="number" 
+                            min={1} 
+                            required
+                            value={quantity} 
+                            // СВЕРХВАЖНО: Автоматически выделяет весь текст при фокусе для мгновенной перезаписи с клавиатуры!
+                            onFocus={(e) => e.target.select()} 
+                            onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                            className={styles.qtyInput}
+                        />
+                        <button 
+                            type="button" 
+                            onClick={() => setQuantity(prev => prev + 1)}
+                            className={styles.qtyChangeBtn}
+                        >
+                            +1
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={() => setQuantity(prev => prev + 5)}
+                            className={styles.qtyChangeBtn}
+                        >
+                            +5
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={() => setQuantity(prev => prev + 10)}
+                            className={styles.qtyChangeBtn}
+                        >
+                            +10
+                        </button>
+                    </div>
                 </div>
 
                 <div className={styles.inputWrapper}>

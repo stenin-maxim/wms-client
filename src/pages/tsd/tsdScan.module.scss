@@ -121,6 +121,54 @@
     }
 }
 
+.qtyControlsRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.qtyInput {
+    flex-grow: 1; // Инпут честно занимает всё свободное место между кнопками
+    padding: 12px;
+    background-color: $bg-input;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-size: 22px; 
+    font-weight: 700;
+    color: $primary-amber;
+    text-align: center;
+
+    &:focus {
+        border-color: $primary-amber;
+        outline: none;
+    }
+}
+
+.qtyChangeBtn {
+    background-color: $bg-card;
+    border: 1px solid $border-color;
+    color: $text-light;
+    padding: 14px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    min-width: 45px;
+    user-select: none;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+        border-color: $primary-amber;
+        color: $primary-amber;
+    }
+
+    &:active {
+        background-color: rgba($primary-amber, 0.1);
+        transform: scale(0.95);
+    }
+}
+
 .qtyInput {
     width: 100%;
     padding: 12px;
