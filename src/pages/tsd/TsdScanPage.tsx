@@ -4,7 +4,8 @@ import { useGetInvoicesQuery } from '@/features/invoices/invoicesApi';
 import { useGetCellsQuery } from '@/features/cells/cellsApi';
 import { useGetProductsQuery } from '@/features/products/productsApi';
 import { useScanProductToInvoiceMutation, usePlaceProductToCellMutation } from '@/features/tsd/tsdApi';
-import { Barcode, ArrowDownLeft, Move, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Barcode, ArrowDownLeft, Move, CheckCircle2, AlertTriangle, Camera, CameraOff} from 'lucide-react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 import styles from './tsdScan.module.scss';
 
 type TsdMode = 'INBOUND' | 'PUTAWAY';
@@ -13,6 +14,7 @@ export default function TsdScanPage() {
     const [mode, setMode] = useState<TsdMode>('INBOUND');
     const [barcodeInput, setBarcodeInput] = useState('');
     const [quantity, setQuantity] = useState<number>(1);
+    const [isCameraOpen, setIsCameraOpen] = useState(false);
     
     // Селекторы выбора документов/ячеек, если лазер не сработал
     const [selectedInvoiceId, setSelectedInvoiceId] = useState('');
@@ -32,6 +34,7 @@ export default function TsdScanPage() {
     const [placeToCell, { isLoading: isPlacing }] = usePlaceProductToCellMutation();
 
     const inputRef = useRef<HTMLInputElement>(null);
+    const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
     // Автофокус: удерживает поле ввода активным, чтобы лазерный сканер всегда мог вбить штрихкод
     useEffect(() => {
@@ -39,6 +42,42 @@ export default function TsdScanPage() {
             inputRef.current.focus();
         }
     }, [mode, statusMode]);
+
+    useEffect(() => {
+        if (isCameraOpen) {
+            const scanner = new Html5QrcodeScanner(
+                'reader',
+                { 
+                    fps: 15,
+                    qrbox: { width: 250, height: 150 },
+                    experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+                },
+                false
+            );
+
+            scanner.render(
+                (decodedText) => {
+                    setBarcodeInput(decodedText);
+                    setIsCameraOpen(false);
+                    scanner.clear();
+                    
+                    setTimeout(() => {
+                        const fakeEvent = { preventDefault: () => {} } as React.FormEvent;
+                        processScanAction(decodedText, fakeEvent);
+                    }, 100);
+                },
+                () => {}
+            );
+
+            scannerRef.current = scanner;
+        }
+
+        return () => {
+            if (scannerRef.current) {
+                scannerRef.current.clear().catch(err => console.error(err));
+            }
+        };
+    }, [isCameraOpen, mode, selectedInvoiceId, selectedCellId, selectedProductId, quantity]);
 
     // Аудио-сопровождение для имитации реального ТСД терминала
     const playBeep = (type: 'SUCCESS' | 'ERROR') => {
@@ -61,14 +100,16 @@ export default function TsdScanPage() {
         }
     };
 
-    const handleTsdSubmit = async (e: React.FormEvent) => {
+    const handleTsdSubmit = (e: React.FormEvent) => {
+        processScanAction(barcodeInput, e);
+    };
+
+    const processScanAction = async (scannedValue: string, e: React.FormEvent) => {
         e.preventDefault();
-        if (!barcodeInput.trim()) return;
+        if (!scannedValue.trim()) return;
 
         setStatusMode('IDLE');
         setStatusMessage('');
-
-        const scannedValue = barcodeInput.trim();
 
         if (mode === 'INBOUND') {
             if (!selectedInvoiceId) {
@@ -81,7 +122,7 @@ export default function TsdScanPage() {
             try {
                 await scanToInvoice({
                     invoiceId: selectedInvoiceId,
-                    barcodeOrSku: scannedValue,
+                    barcodeOrSku: scannedValue.trim(),
                     quantity
                 }).unwrap();
 
@@ -91,11 +132,10 @@ export default function TsdScanPage() {
                 setBarcodeInput('');
             } catch (err: any) {
                 setStatusMode('ERROR');
-                setStatusMessage(err?.data?.message || 'Ошибка: товар отсутствует в накладной поставщика');
+                setStatusMessage(err?.data?.message || 'Ошибка: товар отсутствует в накладной');
                 playBeep('ERROR');
             }
         } else {
-            // РЕЖИМ РАСКЛАДКИ (PUTAWAY)
             if (!selectedCellId || !selectedProductId) {
                 setStatusMode('ERROR');
                 setStatusMessage('Выберите целевую ячейку и товар для размещения');
@@ -182,6 +222,12 @@ export default function TsdScanPage() {
                 )}
             </div>
 
+            {isCameraOpen && (
+                <div className={styles.cameraContainer}>
+                    <div id="reader" className={styles.scannerElement}></div>
+                </div>
+            )}
+
             {/* ИНДИКАТОР ШТРИХКОДА И ВВОД */}
             <form onSubmit={handleTsdSubmit} className={styles.scanForm}>
                 <div className={styles.quantitySection}>
@@ -219,30 +265,39 @@ export default function TsdScanPage() {
                         >
                             +5
                         </button>
-                        <button 
-                            type="button" 
-                            onClick={() => setQuantity(prev => prev + 10)}
-                            className={styles.qtyChangeBtn}
-                        >
-                            +10
-                        </button>
                     </div>
                 </div>
 
                 <div className={styles.inputWrapper}>
-                    <Barcode className={styles.barcodeIcon} size={24} />
+                    <Barcode 
+                        className={styles.barcodeIcon} 
+                        size={24} 
+                    />
                     <input
                         ref={inputRef}
                         type="text"
-                        placeholder={mode === 'INBOUND' ? "Сканируйте штрихкод детали..." : "Штрихкод ячейки / детали..."}
+                        placeholder={mode === 'INBOUND' ? "Штрихкод детали..." : "Штрихкод..."}
                         value={barcodeInput}
                         onChange={(e) => setBarcodeInput(e.target.value)}
                         className={styles.tsdInput}
                         disabled={isScanning || isPlacing}
                     />
+                    
+                    <button
+                        type="button"
+                        onClick={() => setIsCameraOpen(!isCameraOpen)}
+                        className={`${styles.cameraToggleBtn} ${isCameraOpen ? styles.camActive : ''}`}
+                        title="Сканировать через камеру телефона"
+                    >
+                        {isCameraOpen ? <CameraOff size={20} /> : <Camera size={20} />}
+                    </button>
                 </div>
 
-                <button type="submit" className={styles.submitBtn} disabled={isScanning || isPlacing}>
+                <button 
+                    type="submit" 
+                    className={styles.submitBtn} 
+                    disabled={isScanning || isPlacing}
+                >
                     {mode === 'INBOUND' ? 'Подтвердить приёмку' : 'Разместить на стеллаж'}
                 </button>
             </form>

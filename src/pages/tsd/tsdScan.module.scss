@@ -255,7 +255,7 @@
     justify-content: center;
     gap: 10px;
     text-align: center;
-    margin-top: auto; // Прижимает плашку статуса к низу ТСД экрана
+    // margin-top: auto; // Прижимает плашку статуса к низу ТСД экрана
 
     svg {
         animation: scaleIn 0.2s ease-out;
@@ -267,6 +267,65 @@
     font-size: 14px;
     font-weight: 600;
     line-height: 1.4;
+}
+
+.cameraToggleBtn {
+    background: transparent;
+    border: none;
+    color: $text-muted;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+
+    &:hover {
+        color: $primary-amber;
+    }
+
+    &.camActive {
+        color: $error;
+    }
+}
+
+.cameraContainer {
+    width: 100%;
+    background-color: #000000;
+    border-radius: 8px;
+    border: 2px solid $border-color;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.scannerElement {
+    width: 100%;
+    
+    // Переопределяем внутренние стили библиотеки html5-qrcode под нашу темную WMS тему
+    video {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 6px;
+    }
+
+    #html5-qrcode-anchor-scan-type-change {
+        display: none !important; // Скрываем лишние текстовые ссылки библиотеки
+    }
+
+    button {
+        background-color: $bg-input !important;
+        color: $text-light !important;
+        border: 1px solid $border-color !important;
+        padding: 8px 12px !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+        font-size: 13px !important;
+        margin-top: 10px !important;
+
+        &:hover {
+            border-color: $primary-amber !important;
+        }
+    }
 }
 
 @keyframes scaleIn {
