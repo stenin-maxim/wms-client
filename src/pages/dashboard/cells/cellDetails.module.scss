@@ -1,0 +1,281 @@
+.detailsPage, .detailsPage * {
+    box-sizing: border-box;
+}
+
+.detailsPage {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: $text-light;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid $border-color;
+    color: $text-muted;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    width: fit-content;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: $primary-amber;
+        color: $primary-amber;
+    }
+}
+
+.headerCard {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.headerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    h2 {
+        margin: 0;
+        font-size: 24px;
+        color: $text-light;
+    }
+}
+
+.amberIcon {
+    color: $primary-amber;
+}
+
+.metaRow {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: $text-muted;
+
+    strong {
+        color: $text-light;
+    }
+}
+
+.code {
+    font-family: monospace;
+    color: $primary-amber;
+    background: $bg-input;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid $border-color;
+}
+
+.statusBadge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.active {
+        background: rgba($success, 0.15);
+        color: #86efac;
+        border: 1px solid rgba($success, 0.3);
+    }
+
+    &.blocked {
+        background: rgba($error, 0.15);
+        color: #fca5a5;
+        border: 1px solid rgba($error, 0.3);
+    }
+}
+
+.headerActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.secondaryBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: $bg-input;
+    border: 1px solid $border-color;
+    color: $text-light;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: $info-blue;
+        color: #93c5fd;
+    }
+
+    &.blockBtn:hover {
+        border-color: $error;
+        color: #fca5a5;
+        background: rgba($error, 0.15);
+    }
+
+    &.unblockBtn:hover {
+        border-color: $success;
+        color: #86efac;
+        background: rgba($success, 0.15);
+    }
+}
+
+.contentCard {
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.cardHeader {
+    margin-bottom: 16px;
+
+    h3 {
+        margin: 0;
+        font-size: 16px;
+        color: $text-light;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.wmsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid $border-color;
+    }
+
+    th {
+        background: rgba($bg-dark, 0.4);
+        color: $text-light;
+        font-weight: 600;
+    }
+
+    tbody tr:hover {
+        background: rgba($bg-input, 0.3);
+    }
+}
+
+.brandText {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: $text-muted;
+}
+
+.skuText {
+    font-family: monospace;
+    font-weight: 700;
+    color: $primary-amber;
+}
+
+.nameText {
+    font-weight: 500;
+    color: $text-light;
+}
+
+.qtyBadge {
+    background: rgba($success, 0.15);
+    color: #86efac;
+    border: 1px solid rgba($success, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+.dateText {
+    color: $text-muted;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.textGreen {
+    color: #86efac;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+.textRed {
+    color: #fca5a5;
+    font-weight: 700;
+    font-family: monospace;
+}
+
+.empty, .loading, .notFound {
+    text-align: center;
+    color: $text-muted;
+    padding: 30px 0;
+}
+
+@media (max-width: 768px) {
+    .wmsTable {
+        thead {
+            display: none;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+            background: rgba($bg-dark, 0.2);
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid $border-color;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba($border-color, 0.3);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &::before {
+                content: attr(data-label);
+                font-weight: 500;
+                color: $text-muted;
+                font-size: 13px;
+            }
+        }
+    }
+}

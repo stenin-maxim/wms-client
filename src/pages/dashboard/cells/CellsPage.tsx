@@ -1,12 +1,14 @@
 // src/pages/dashboard/CellsPage.tsx
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
     useGetCellsQuery, 
     useCreateCellMutation, 
     useToggleCellBlockMutation,
     useLazyGetCellLabelQuery 
 } from '@/features/cells/cellsApi';
-import { Boxes, Plus, ShieldAlert, ShieldCheck, Printer } from 'lucide-react';
+import { useGetStockBalanceQuery } from '@/features/stocks/stocksApi';
+import { Boxes, Plus, ShieldAlert, ShieldCheck, Printer, Eye } from 'lucide-react';
 import { downloadZplFile } from '@/shared/utils/downloadZpl';
 import styles from './cells.module.scss';
 
@@ -16,6 +18,7 @@ export default function CellsPage() {
     const [createCell, { isLoading: isCreating }] = useCreateCellMutation();
     const [toggleBlock] = useToggleCellBlockMutation();
     const [triggerGetLabel] = useLazyGetCellLabelQuery();
+    const { data: stocks = [] } = useGetStockBalanceQuery();
 
     // Стейты формы
     const [zoneName, setZoneName] = useState('');
@@ -54,6 +57,13 @@ export default function CellsPage() {
         } catch (err: any) {
             setFormError(err?.data?.message || 'Ошибка создания ячейки');
         }
+    };
+
+    // Вспомогательная функция подсчета товаров в конкретной ячейке
+    const getCellStockSummary = (cellId: string) => {
+        const cellStocks = stocks.filter((s) => s.cellId === cellId && s.quantity > 0);
+        const totalQty = cellStocks.reduce((sum, item) => sum + item.quantity, 0);
+        return { skuCount: cellStocks.length, totalQty };
     };
 
     const handleToggleBlock = async (id: string, currentStatus: boolean) => {
@@ -137,7 +147,7 @@ export default function CellsPage() {
                     ) : (
                         <div className={styles.tableWrapper}>
                             <table className={styles.wmsTable}>
-                               <thead>
+                                <thead>
                                     <tr>
                                         <th>Адрес ячейки</th>
                                         <th>Зона</th>
@@ -147,38 +157,62 @@ export default function CellsPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {cells.map((cell) => (
-                                        <tr key={cell.id} className={cell.blocked ? styles.rowBlocked : ''}>
-                                            <td className={styles.addressText}>{cell.address}</td>
-                                            <td>Зона {cell.zoneName}</td>
-                                            <td className={styles.code}>
-                                                {cell.barcode ? cell.barcode.replace(/^CELL-([A-Z0-9])(\d{2})(\d{2})(\d{2})$/, 'CELL-$1 $2 $3 $4') : cell.barcode}
-                                            </td>
-                                            <td>
-                                                {cell.blocked ? (
-                                                    <span className={`${styles.statusBadge} ${styles.blocked}`}>Заблокирована</span>
-                                                ) : (
-                                                    <span className={`${styles.statusBadge} ${styles.active}`}>Доступна</span>
-                                                )}
-                                            </td>
-                                            <td className={styles.actions}>
-                                                <button 
-                                                    onClick={() => handleToggleBlock(cell.id, cell.blocked)}
-                                                    className={`${styles.actionBtn} ${cell.blocked ? styles.unblock : styles.block}`}
-                                                    title={cell.blocked ? "Разблокировать" : "Заблокировать для ремонта"}
-                                                >   
-                                                    {cell.blocked ? <ShieldCheck size={16} /> : <ShieldAlert size={16} />}
-                                                </button>
-                                                <button 
-                                                    onClick={() => handlePrintLabel(cell.id, cell.address)}
-                                                    className={`${styles.actionBtn} ${styles.print}`}
-                                                    title="Скачать ZPL этикетку"
-                                                >
-                                                    <Printer size={16} />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                    {cells.map((cell) => {
+                                        const { skuCount, totalQty } = getCellStockSummary(cell.id);
+
+                                        return (
+                                            <tr key={cell.id} className={cell.blocked ? styles.rowBlocked : ''}>
+                                                <td className={styles.addressText} data-label="Адрес ячейки">
+                                                    <Link to={`/dashboard/cells/${cell.id}`} className={styles.addressLink}>
+                                                        {cell.address}
+                                                    </Link>
+                                                    {totalQty > 0 ? (
+                                                        <span className={styles.stockCounterBadge}>
+                                                            {skuCount} поз. ({totalQty} шт.)
+                                                        </span>
+                                                    ) : (
+                                                        <span className={styles.emptyCellBadge}>Пусто</span>
+                                                    )}
+                                                </td>
+                                                <td data-label="Зона">
+                                                    Зона {cell.zoneName}
+                                                </td>
+                                                <td className={styles.code} data-label="Штрихкод ТСД">
+                                                    {cell.barcode ? cell.barcode.replace(/^CELL-([A-Z0-9]+)([0-9]{2})([0-9]{2})([0-9]{2})$/, 'CELL-$1 $2 $3 $4') : cell.barcode}
+                                                </td>
+                                                <td data-label="Статус">
+                                                    {cell.blocked ? (
+                                                        <span className={`${styles.statusBadge} ${styles.blocked}`}>Заблокирована</span>
+                                                    ) : (
+                                                        <span className={`${styles.statusBadge} ${styles.active}`}>Доступна</span>
+                                                    )}
+                                                </td>
+                                                <td className={styles.actions} data-label="Действия">
+                                                    <Link
+                                                        to={`/dashboard/cells/${cell.id}`}
+                                                        className={`${styles.actionBtn} ${styles.view}`}
+                                                        title="Открыть содержимое ячейки"
+                                                    >
+                                                        <Eye size={16} />
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => handleToggleBlock(cell.id, cell.blocked)}
+                                                        className={`${styles.actionBtn} ${cell.blocked ? styles.unblock : styles.block}`}
+                                                        title={cell.blocked ? "Разблокировать" : "Заблокировать для ремонта"}
+                                                    >
+                                                        {cell.blocked ? <ShieldCheck size={16} /> : <ShieldAlert size={16} />}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handlePrintLabel(cell.id, cell.address)}
+                                                        className={`${styles.actionBtn} ${styles.print}`}
+                                                        title="Скачать ZPL этикетку"
+                                                    >
+                                                        <Printer size={16} />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                     {cells.length === 0 && (
                                         <tr>
                                             <td colSpan={5} className={styles.empty}>Топология склада пуста. Добавьте первый стеллаж.</td>

@@ -274,3 +274,36 @@
     color: $text-muted;
     padding: 40px 0;
 }
+
+.addressLink {
+    color: $primary-amber;
+    text-decoration: none;
+    font-weight: 700;
+    margin-right: 10px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.stockCounterBadge {
+    background: rgba($info-blue, 0.15);
+    color: #93c5fd;
+    border: 1px solid rgba($info-blue, 0.3);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.emptyCellBadge {
+    color: $text-muted;
+    font-size: 11px;
+    font-style: italic;
+}
+
+.actionBtn.view:hover {
+    background: rgba($primary-amber, 0.2);
+    color: $primary-amber;
+    border-color: $primary-amber;
+}

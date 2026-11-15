@@ -6,6 +6,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/layouts/dashboard/DashboardLayout'; 
 import DashboardHomePage from '@/pages/dashboard/home/DashboardHomePage';
 import CellsPage from '@/pages/dashboard/cells/CellsPage';
+import CellDetailsPage from '@/pages/dashboard/cells/CellDetailsPage';
 import EmployeesPage from '@/pages/dashboard/employees/EmployeesPage';
 import ProductsPage from '@/pages/dashboard/products/ProductsPage';
 import StocksPage from '@/pages/dashboard/stocks/StocksPage';
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
             {
                 path: 'cells',
                 element: <CellsPage />
+            },
+            {
+                path: 'cells/:id',
+                element: <CellDetailsPage />
             },
             {
                 path: 'employees',
