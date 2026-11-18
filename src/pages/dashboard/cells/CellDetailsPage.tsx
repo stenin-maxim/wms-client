@@ -1,5 +1,5 @@
 // src/pages/dashboard/cells/CellDetailsPage.tsx
-import React from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     useGetCellsQuery,
@@ -18,11 +18,14 @@ import {
     ShieldCheck,
     History
 } from 'lucide-react';
+import { type LabelSizeType } from '@/shared/constants/labels';
+import { LabelSizeSelector } from '@/shared/ui/LabelSizeSelector/LabelSizeSelector';
 import styles from './cellDetails.module.scss';
 
 export default function CellDetailsPage() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const [labelSize, setLabelSize] = useState<LabelSizeType>('SIZE_58X40');
 
     const { data: cells = [], isLoading: isLoadingCells } = useGetCellsQuery();
     const { data: stocks = [], isLoading: isLoadingStocks } = useGetStockBalanceQuery();
@@ -47,10 +50,10 @@ export default function CellDetailsPage() {
     const handlePrintLabel = async () => {
         if (!cell) return;
         try {
-            const res = await triggerGetLabel(cell.id).unwrap();
-            downloadZplFile(res.zplCode, `label_cell_${cell.address}`);
+            const res = await triggerGetLabel({ id: cell.id, size: labelSize }).unwrap();
+            downloadZplFile(res.zplCode, `label_cell_${cell.address}_${labelSize}`);
         } catch (err) {
-            alert('Не удалось получить ZPL этикетку');
+            alert('Не удалось получить код этикетки');
         }
     };
 
@@ -107,6 +110,7 @@ export default function CellDetailsPage() {
                 </div>
 
                 <div className={styles.headerActions}>
+                    <LabelSizeSelector value={labelSize} onChange={setLabelSize} />
                     <button onClick={handlePrintLabel} className={styles.secondaryBtn}>
                         <Printer size={16} />
                         <span>Печать ZPL</span>

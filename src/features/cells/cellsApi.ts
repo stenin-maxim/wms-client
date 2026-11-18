@@ -1,5 +1,6 @@
 // src/features/cells/cellsApi.ts
 import { baseApi } from '@/api/baseApi';
+import { type LabelSizeType } from '@/shared/constants/labels';
 
 export interface CellDto {
     id: string;
@@ -50,8 +51,11 @@ export const cellsApi = baseApi.injectEndpoints({
             invalidatesTags: ['Cells'],
         }),
         // GET-запрос ZPL-кода этикетки
-        getCellLabel: builder.query<{ zplCode: string }, string>({
-            query: (id) => `labels/cell/${id}`,
+        getCellLabel: builder.query<{ zplCode: string }, { id: string; size: LabelSizeType }>({
+            query: ({ id, size }) => ({
+                url: `labels/cell/${id}`,
+                params: { size },
+            }),
         }),
     }),
 });

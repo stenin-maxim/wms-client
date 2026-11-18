@@ -1,4 +1,4 @@
-// src/pages/dashboard/CellsPage.tsx
+// src/pages/dashboard/cells/CellsPage.tsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -10,6 +10,8 @@ import {
 import { useGetStockBalanceQuery } from '@/features/stocks/stocksApi';
 import { Boxes, Plus, ShieldAlert, ShieldCheck, Printer, Eye } from 'lucide-react';
 import { downloadZplFile } from '@/shared/utils/downloadZpl';
+import { type LabelSizeType } from '@/shared/constants/labels';
+import { LabelSizeSelector } from '@/shared/ui/LabelSizeSelector/LabelSizeSelector';
 import styles from './cells.module.scss';
 
 export default function CellsPage() {
@@ -26,6 +28,7 @@ export default function CellsPage() {
     const [shelf, setShelf] = useState('');
     const [position, setPosition] = useState('');
     const [formError, setFormError] = useState('');
+    const [labelSize, setLabelSize] = useState<LabelSizeType>('SIZE_58X40');
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,8 +79,8 @@ export default function CellsPage() {
 
     const handlePrintLabel = async (id: string, address: string) => {
         try {
-            const res = await triggerGetLabel(id).unwrap();
-            downloadZplFile(res.zplCode, `label_cell_${address}`); // Вызываем единый хелпер скачивания
+            const res = await triggerGetLabel({ id, size: labelSize }).unwrap();
+            downloadZplFile(res.zplCode, `label_cell_${address}_${labelSize}`);
         } catch (err) {
             alert('Не удалось получить код этикетки');
         }
@@ -141,7 +144,10 @@ export default function CellsPage() {
 
                 {/* ПРАВАЯ ЧАСТЬ: Таблица ячеек */}
                 <div className={styles.cardTable}>
-                    <h3>Активные места хранения ({cells.length})</h3>
+                    <div className={styles.tableHeaderRow}>
+                        <h3>Активные места хранения ({cells.length})</h3>
+                        <LabelSizeSelector value={labelSize} onChange={setLabelSize} />
+                    </div>
                     {isLoading ? (
                         <div className={styles.loading}>Загрузка карты стеллажей...</div>
                     ) : (

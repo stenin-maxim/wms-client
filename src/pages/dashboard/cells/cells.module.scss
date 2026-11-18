@@ -307,3 +307,16 @@
     color: $primary-amber;
     border-color: $primary-amber;
 }
+
+.tableHeaderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    h3 {
+        margin: 0;
+    }
+}

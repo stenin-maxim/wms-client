@@ -8,6 +8,8 @@ import {
 } from '@/features/products/productsApi';
 import { Wrench, Plus, Trash2, Printer, Barcode } from 'lucide-react';
 import { downloadZplFile } from '@/shared/utils/downloadZpl';
+import { type LabelSizeType } from '@/shared/constants/labels';
+import { LabelSizeSelector } from '@/shared/ui/LabelSizeSelector/LabelSizeSelector';
 import styles from './products.module.scss';
 
 export default function ProductsPage() {
@@ -22,6 +24,7 @@ export default function ProductsPage() {
     const [brand, setBrand] = useState('');
     const [barcode, setBarcode] = useState('');
     const [formError, setFormError] = useState('');
+    const [labelSize, setLabelSize] = useState<LabelSizeType>('SIZE_58X40');
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -54,12 +57,12 @@ export default function ProductsPage() {
         }
     };
 
-    const handlePrintLabel = async (id: string, sku: string) => {
+    const handlePrintLabel = async (id: string, address: string) => {
         try {
-            const res = await triggerGetLabel(id).unwrap();
-            downloadZplFile(res.zplCode, `label_product_${sku}`); // Вызываем единый хелпер скачивания
+            const res = await triggerGetLabel({ id, size: labelSize }).unwrap();
+            downloadZplFile(res.zplCode, `label_cell_${address}_${labelSize}`);
         } catch (err) {
-            alert('Не удалось сгенерировать ценник ZPL');
+            alert('Не удалось получить код этикетки');
         }
     };
 
@@ -121,7 +124,10 @@ export default function ProductsPage() {
 
                 {/* ПРАВАЯ ЧАСТЬ: Таблица каталога */}
                 <div className={styles.cardTable}>
-                    <h3>Зарегистрировано номенклатуры ({products.length})</h3>
+                    <div className={styles.tableHeaderRow}>
+                        <h3>Зарегистрировано номенклатуры ({products.length})</h3>
+                        <LabelSizeSelector value={labelSize} onChange={setLabelSize} />
+                    </div>
                     {isLoading ? (
                         <div className={styles.loading}>Загрузка базы товаров...</div>
                     ) : (

@@ -1,0 +1,32 @@
+.selectorWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.label {
+    font-size: 13px;
+    color: $text-muted;
+    white-space: nowrap;
+}
+
+.select {
+    background-color: $bg-input;
+    color: $text-light;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &:focus {
+        border-color: $primary-amber;
+        outline: none;
+    }
+
+    option {
+        background: $bg-card;
+        color: $text-light;
+    }
+}

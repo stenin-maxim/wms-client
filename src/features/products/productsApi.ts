@@ -1,5 +1,6 @@
 // src/features/products/productsApi.ts
 import { baseApi } from '@/api/baseApi';
+import { type LabelSizeType } from '@/shared/constants/labels';
 
 export interface ProductDto {
     id: string;
@@ -38,8 +39,11 @@ export const productsApi = baseApi.injectEndpoints({
             invalidatesTags: ['Products'],
         }),
         // GET-запрос ZPL-кода этикетки детали для принтера
-        getProductLabel: builder.query<{ zplCode: string }, string>({
-            query: (id) => `labels/product/${id}`,
+        getProductLabel: builder.query<{ zplCode: string }, { id: string; size: LabelSizeType }>({
+            query: ({ id, size }) => ({
+                url: `labels/product/${id}`,
+                params: { size },
+            }),
         }),
     }),
 });
