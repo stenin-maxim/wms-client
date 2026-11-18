@@ -2,6 +2,7 @@
 import { baseApi } from '@/api/baseApi';
 import { type InvoiceDto } from '@/features/invoices/invoicesApi';
 import { type StockDto } from '@/features/stocks/stocksApi';
+import { type OrderDto } from '@/features/orders/ordersApi';
 
 export interface TsdScanProductRequest {
     invoiceId: string;
@@ -12,6 +13,13 @@ export interface TsdScanProductRequest {
 export interface TsdPlaceProductRequest {
     productId: string;
     cellId: string;
+    quantity: number;
+}
+
+export interface TsdPickProductRequest {
+    orderId: string;
+    cellBarcodeOrAddress: string;
+    productBarcodeOrSku: string;
     quantity: number;
 }
 
@@ -35,10 +43,19 @@ export const tsdApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Invoices', 'Stocks'],
         }),
+        pickProductFromCell: builder.mutation<OrderDto, TsdPickProductRequest>({
+            query: ({ orderId, ...body }) => ({
+                url: `orders/outbound/${orderId}/pick`,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Stocks'],
+        }),
     }),
 });
 
 export const { 
     useScanProductToInvoiceMutation,
-    usePlaceProductToCellMutation 
+    usePlaceProductToCellMutation,
+    usePickProductFromCellMutation
 } = tsdApi;
