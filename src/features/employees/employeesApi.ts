@@ -15,6 +15,12 @@ export interface UpdateEmployeeStatusRequest {
     status: 'ACTIVE' | 'BLOCKED';
 }
 
+export interface UpdateEmployeeProfileRequest {
+    id: string;
+    role: 'ADMIN' | 'MANAGER' | 'STOREKEEPER' | 'PICKER' | 'AUDITOR';
+    assignedEquipment?: string;
+}
+
 export const employeesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getEmployees: builder.query<UserProfile[], void>({
@@ -39,11 +45,20 @@ export const employeesApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Auth'],
         }),
+        updateEmployeeProfile: builder.mutation<UserProfile, UpdateEmployeeProfileRequest>({
+            query: ({ id, ...body }) => ({
+                url: `employees/${id}`,
+                method: 'PUT',
+                body,
+            }),
+            invalidatesTags: ['Auth'],
+        }),
     }),
 });
 
-export const { 
-    useGetEmployeesQuery, 
-    useCreateEmployeeMutation, 
-    useChangeEmployeeStatusMutation 
+export const {
+    useGetEmployeesQuery,
+    useCreateEmployeeMutation,
+    useChangeEmployeeStatusMutation,
+    useUpdateEmployeeProfileMutation
 } = employeesApi;
