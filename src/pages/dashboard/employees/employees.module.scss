@@ -206,27 +206,44 @@
     }
 }
 
+.actionsGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .actionBtn {
-    background: $bg-input; 
-    border: 1px solid $border-color; 
-    padding: 6px; 
-    border-radius: 6px; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    color: $text-light; 
+    background: $bg-input;
+    border: 1px solid $border-color;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-light;
+    text-decoration: none;
+    flex-shrink: 0;
     transition: all 0.2s;
 
-    &.block:hover { 
-        background: rgba($error, 0.2); 
-        color: #fca5a5; 
-        border-color: $error; 
+    &.view:hover {
+        background: rgba($primary-amber, 0.2);
+        color: $primary-amber;
+        border-color: $primary-amber;
     }
 
-    &.unblock:hover { 
-        background: rgba($success, 0.2); 
-        color: #86efac; 
-        border-color: $success; 
+    &.block:hover {
+        background: rgba($error, 0.2);
+        color: #fca5a5;
+        border-color: $error;
+    }
+
+    &.unblock:hover {
+        background: rgba($success, 0.2);
+        color: #86efac;
+        border-color: $success;
     }
 }
 
@@ -261,11 +278,6 @@
 
 .rowMe { 
     background: rgba($primary-amber, 0.03); 
-}
-
-.actions { 
-    gap: 8px; 
-    align-items: center; 
 }
 
 .lockText { 
@@ -332,5 +344,18 @@
 
     .nameBlock { 
         width: 100%; 
+    }
+}
+
+.nameLink {
+    font-weight: 600;
+    color: $primary-amber;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        text-decoration: underline;
     }
 }

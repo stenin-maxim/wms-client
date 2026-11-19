@@ -5,8 +5,9 @@ import {
     useCreateEmployeeMutation, 
     useChangeEmployeeStatusMutation 
 } from '@/features/employees/employeesApi';
+import { Link } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/reduxHooks';
-import { Users, UserPlus, UserX, UserCheck } from 'lucide-react';
+import { Users, UserPlus, UserX, UserCheck, Eye } from 'lucide-react';
 import { ROLE_LABELS } from '@/shared/constants/roles';
 import styles from './employees.module.scss';
 
@@ -150,9 +151,9 @@ export default function EmployeesPage() {
                                             <tr key={emp.id} className={`${isMe ? styles.rowMe : ''} ${status === 'BLOCKED' ? styles.rowBlocked : ''}`}>
                                                 <td>
                                                     <div className={styles.nameBlock}>
-                                                        <span className={styles.nameText}>
+                                                        <Link to={`/dashboard/employees/${emp.id}`} className={styles.nameLink}>
                                                             {emp.name} {isMe && <span className={styles.meBadge}>Вы</span>}
-                                                        </span>
+                                                        </Link>
                                                         {emp.assignedEquipment && (
                                                             <div className={styles.equipmentBadge}>
                                                                 <span>{emp.assignedEquipment}</span>
@@ -173,18 +174,27 @@ export default function EmployeesPage() {
                                                         <span className={`${styles.statusBadge} ${styles.blocked}`}>Заблокирован</span>
                                                     )}
                                                 </td>
-                                                <td className={styles.actions}>
-                                                    {!isMe ? (
-                                                        <button 
-                                                            onClick={() => handleToggleStatus(emp.id, status)}
-                                                            className={`${styles.actionBtn} ${status === 'BLOCKED' ? styles.unblock : styles.block}`}
-                                                            title={status === 'BLOCKED' ? "Активировать" : "Заблокировать"}
+                                                <td data-label="Действия">
+                                                    <div className={styles.actionsGroup}>
+                                                        <Link
+                                                            to={`/dashboard/employees/${emp.id}`}
+                                                            className={`${styles.actionBtn} ${styles.view}`}
+                                                            title="Открыть профиль и инвентарь"
                                                         >
-                                                            {status === 'BLOCKED' ? <UserCheck size={16} /> : <UserX size={16} />}
-                                                        </button>
-                                                    ) : (
-                                                        <span className={styles.lockText}>Защищено</span>
-                                                    )}
+                                                            <Eye size={16} />
+                                                        </Link>
+                                                        {!isMe ? (
+                                                            <button
+                                                                onClick={() => handleToggleStatus(emp.id, status)}
+                                                                className={`${styles.actionBtn} ${status === 'BLOCKED' ? styles.unblock : styles.block}`}
+                                                                title={status === 'BLOCKED' ? "Активировать" : "Заблокировать"}
+                                                            >
+                                                                {status === 'BLOCKED' ? <UserCheck size={16} /> : <UserX size={16} />}
+                                                            </button>
+                                                        ) : (
+                                                            <span className={styles.lockText}>Защищено</span>
+                                                        )}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         );

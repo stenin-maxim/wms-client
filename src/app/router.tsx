@@ -8,6 +8,7 @@ import DashboardHomePage from '@/pages/dashboard/home/DashboardHomePage';
 import CellsPage from '@/pages/dashboard/cells/CellsPage';
 import CellDetailsPage from '@/pages/dashboard/cells/CellDetailsPage';
 import EmployeesPage from '@/pages/dashboard/employees/EmployeesPage';
+import EmployeeDetailsPage from '@/pages/dashboard/employees/EmployeeDetailsPage';
 import ProductsPage from '@/pages/dashboard/products/ProductsPage';
 import StocksPage from '@/pages/dashboard/stocks/StocksPage';
 import StockHistoryPage from '@/pages/dashboard/stocks/StockHistoryPage';
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
             {
                 path: 'employees',
                 element: <EmployeesPage />
+            },
+            {
+                path: 'employees/:id',
+                element: <EmployeeDetailsPage />
             },
             {
                 path: 'stocks',
