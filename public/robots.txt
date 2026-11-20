@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /$
+Disallow: /dashboard
+Disallow: /tsd
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://pro-wms.ru/sitemap.xml
