@@ -1,13 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>web</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- Основные SEO-теги -->
+        <title>WMS Система — Умный учет склада, адресное хранение и ТСД</title>
+        <meta name="description" content="Облачная WMS-система для малого и среднего бизнеса. Адресное хранение, приёмка и сборка через смартфон или ТСД, контроль персонала и печать этикеток ZPL." />
+        <meta name="keywords" content="WMS система, учет склада, адресное хранение, программа для склада, ТСД сканер, учет автозапчастей" />
+        
+        <!-- OpenGraph для красивых ссылок в Telegram и соцсетях -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="WMS Система — Умный учет склада и контроль персонала" />
+        <meta property="og:description" content="Наведите идеальный порядок в адресном хранении и замените дорогие ТСД обычными смартфонами." />
+        <meta property="og:url" content="https://xn----7sbfkf5bif1g.ru" />
+        
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <!-- Микроразметка для поисковых роботов -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "WMS Система",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web, Android, iOS",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "RUB"
+            }
+        }
+        </script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>
