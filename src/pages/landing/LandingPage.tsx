@@ -1,7 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDemoLoginMutation } from '@/features/auth/authApi';
+import { useAppDispatch } from '@/hooks/reduxHooks';
+import { setCredentials } from '@/features/auth/authSlice';
 import styles from './landing.module.scss';
 
 export default function LandingPage() {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const [demoLogin, { isLoading: isDemoLoading }] = useDemoLoginMutation();
+
+    const handleStartDemo = async () => {
+        try {
+            const authData = await demoLogin().unwrap();
+            dispatch(setCredentials(authData));
+            navigate('/dashboard');
+        } catch (err) {
+            alert('Не удалось запустить демо-режим. Попробуйте войти через регистрацию.');
+        }
+    };
+
     return (
         <div className={styles.landing}>
             
@@ -22,9 +39,9 @@ export default function LandingPage() {
 
             {/* Главный блок (Hero) */}
             <section className={styles.hero}>
-                <div className={styles.badge}>B2B платформа для автобизнеса</div>
+                <div className={styles.badge}>B2B платформа для складского бизнеса</div>
                 <h1>
-                    Умный учет склада запчастей и <span>контроль персонала</span> в одной системе
+                    Умный учет склада и <span>контроль персонала</span> в одной системе
                 </h1>
                 <p className={styles.subtitle}>
                     Специализированное решение для малого и среднего бизнеса. Наведите идеальный порядок 
@@ -34,9 +51,14 @@ export default function LandingPage() {
                     <Link to="/register" className={styles.heroPrimary}>
                         Начать бесплатно
                     </Link>
-                    <Link to="/login" className={styles.heroSecondary}>
-                        Демо-доступ
-                    </Link>
+                    <button 
+                        type="button" 
+                        onClick={handleStartDemo} 
+                        disabled={isDemoLoading}
+                        className={styles.heroSecondary}
+                    >
+                        {isDemoLoading ? 'Создаем демо-склад...' : 'Демо-доступ'}
+                    </button>
                 </div>
             </section>
 
@@ -45,7 +67,7 @@ export default function LandingPage() {
                 <h2 className={styles.sectionTitle}>Кому идеально подойдет система?</h2>
                 <div className={styles.grid}>
                     <div className={styles.audienceCard}>
-                        <h3>Небольшие склады запчастей</h3>
+                        <h3>Небольшие склады</h3>
                         <p>Для тех, кто вырос из Excel и хочет запустить полноценное адресное ячеистое хранение без лишних затрат на дорогой софт.</p>
                     </div>
                     <div className={styles.audienceCard}>

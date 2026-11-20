@@ -2,6 +2,11 @@
 import { baseApi } from '@/api/baseApi'; // Импортируем наш глобальный API
 import { type UserProfile } from './authSlice';
 
+export interface AuthResponse {
+    token: string;
+    user: UserProfile;
+}
+
 // Расширяем глобальный API эндпоинтами для логина/регистрации
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -26,8 +31,19 @@ export const authApi = baseApi.injectEndpoints({
             query: () => 'auth/me',
             providesTags: ['Auth'],
         }),
+        demoLogin: builder.mutation<AuthResponse, void>({
+            query: () => ({
+                url: 'auth/demo',
+                method: 'POST',
+            }),
+        }),
     }),
 });
 
 // RTK Query автоматически сгенерирует хук, привязанный к общему стору
-export const { useLoginMutation, useRegisterMutation, useGetMeQuery } = authApi;
+export const {
+    useLoginMutation,
+    useRegisterMutation,
+    useGetMeQuery,
+    useDemoLoginMutation
+} = authApi;

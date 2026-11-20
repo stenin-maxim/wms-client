@@ -124,11 +124,20 @@
 
             .heroSecondary {
                 @extend .heroBtn;
+                background-color: transparent;
                 color: $text-light;
                 border: 1px solid $border-color;
+                font-family: inherit;
+                cursor: pointer;
 
                 &:hover {
                     background-color: rgba($text-light, 0.05);
+                    border-color: $primary-amber;
+                }
+
+                &:disabled {
+                    opacity: 0.6;
+                    cursor: not-allowed;
                 }
             }
         }
